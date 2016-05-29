@@ -235,7 +235,7 @@ namespace VirtualDesktopGridSwitcher {
         private bool ActivateWindow(IntPtr hwnd) {
             if (hwnd != IntPtr.Zero) {
                 var desktop = VirtualDesktop.FromHwnd(hwnd);
-                if (desktop != null && desktopIdLookup[desktop] == this._current) {
+                if (desktop != null && desktop == VirtualDesktop.Current) {
                     Debug.WriteLine("Activate " + Current + " " + hwnd);
                     WinAPI.SetForegroundWindow(hwnd);
                     return true;
