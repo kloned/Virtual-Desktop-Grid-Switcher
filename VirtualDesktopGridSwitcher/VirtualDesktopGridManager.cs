@@ -134,19 +134,22 @@ namespace VirtualDesktopGridSwitcher {
                 this._current = newDesktop;
                 sysTrayProcess.ShowIconForDesktop(Current);
 
-                var fgHwnd = WinAPI.GetForegroundWindow();
-                var lastActiveWindow = activeWindows[Current];
-
                 var browserInfo = settings.GetBrowserToActivateInfo();
-                if (browserInfo != null) {
-                    if (lastActiveBrowserWindows[Current] != activeWindows[Current]) {
-                        FindActivateBrowserWindow(lastActiveBrowserWindows[Current], browserInfo);
-                    }
-                }
+                if (movingWindow == IntPtr.Zero || !IsWindowDefaultBrowser(movingWindow, browserInfo)) {
 
-                if (!ActivateWindow(lastActiveWindow)) {
-                    Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
-                    WinAPI.SetForegroundWindow(fgHwnd);
+                    var fgHwnd = WinAPI.GetForegroundWindow();
+                    var lastActiveWindow = activeWindows[Current];
+
+                    if (browserInfo != null) {
+                        if (lastActiveBrowserWindows[Current] != activeWindows[Current]) {
+                            FindActivateBrowserWindow(lastActiveBrowserWindows[Current], browserInfo);
+                        }
+                    }
+                
+                    if (!ActivateWindow(lastActiveWindow)) {
+                        Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
+                        WinAPI.SetForegroundWindow(fgHwnd);
+                    }
                 }
 
                 movingWindow = IntPtr.Zero;
