@@ -23,7 +23,6 @@ namespace WindowsDesktop
 #if DEBUG
 			isSupportedInternal;
 #else
-                return 
                     //Environment.OSVersion.Version.Major >= 10 &&
                     isSupportedInternal;
 #endif
