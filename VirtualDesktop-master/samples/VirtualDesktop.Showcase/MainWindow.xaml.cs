@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using WindowsDesktop;
@@ -12,6 +13,11 @@ namespace VirtualDesktopShowcase
 		public MainWindow()
 		{
 			this.InitializeComponent();
+
+			foreach (var id in VirtualDesktop.GetDesktops().Select(x => x.Id))
+			{
+				System.Diagnostics.Debug.WriteLine(id);
+			}
 		}
 
 		private void CreateNew(object sender, RoutedEventArgs e)
@@ -54,5 +60,14 @@ namespace VirtualDesktopShowcase
 			this.MoveToDesktop(right);
 			right.Switch();
 		}
+
+		private void Pin(object sender, RoutedEventArgs e)
+		{
+			this.TogglePin();
+		}
+
+
+		[DllImport("user32.dll")]
+		private static extern IntPtr GetForegroundWindow();
 	}
 }
