@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using GlobalHotkeyWithDotNET;
-using VDMHelperCLR.Common;
 using VirtualDesktopGridSwitcher.Settings;
 using WindowsDesktop;
 using System.IO;
@@ -19,8 +18,6 @@ namespace VirtualDesktopGridSwitcher {
 
         private SettingValues settings;
         private SysTrayProcess sysTrayProcess;
-
-        private IVdmHelper VDMHelper;
 
         private Dictionary<VirtualDesktop, int> desktopIdLookup;
         private VirtualDesktop[] desktops;
@@ -42,9 +39,6 @@ namespace VirtualDesktopGridSwitcher {
             this.settings = settings;
             this.sysTrayProcess = sysTrayProcess;
 
-            this.VDMHelper = VdmHelperFactory.CreateInstance();
-            this.VDMHelper.Init();
-
             foregroundWindowChangedDelegate = new WinAPI.WinEventDelegate(ForegroundWindowChanged);
             fgWindowHook = WinAPI.SetWinEventHook(WinAPI.EVENT_SYSTEM_FOREGROUND, WinAPI.EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, foregroundWindowChangedDelegate, 0, 0, WinAPI.WINEVENT_OUTOFCONTEXT);
 
@@ -54,8 +48,6 @@ namespace VirtualDesktopGridSwitcher {
         public void Dispose()
         {
             Stop();
-
-            this.VDMHelper.Dispose();
 
             WinAPI.UnhookWinEvent(fgWindowHook);
         }
