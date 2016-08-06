@@ -36,10 +36,13 @@ namespace WindowsDesktop
 			}
 			else
 			{
-				IntPtr view;
-				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
-				ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
-			}
+                try { 
+				    IntPtr view;
+				    ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+				    ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
+                } catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) {
+                }
+            }
 		}
 
 		public static bool IsPinnedWindow(IntPtr hWnd)
