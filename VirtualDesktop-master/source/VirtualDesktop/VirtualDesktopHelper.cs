@@ -19,10 +19,10 @@ namespace WindowsDesktop
 		{
 			ThrowIfNotSupported();
 
-			return VirtualDesktop.ComManager.IsWindowOnCurrentVirtualDesktop(handle);
+			return ComObjects.VirtualDesktopManager.IsWindowOnCurrentVirtualDesktop(handle);
 		}
 
-		public static bool MoveToDesktop(IntPtr hWnd, VirtualDesktop virtualDesktop)
+		public static void MoveToDesktop(IntPtr hWnd, VirtualDesktop virtualDesktop)
 		{
 			ThrowIfNotSupported();
 
@@ -32,11 +32,69 @@ namespace WindowsDesktop
 			if (Process.GetCurrentProcess().Id == processId)
 			{
 				var guid = virtualDesktop.Id;
-				VirtualDesktop.ComManager.MoveWindowToDesktop(hWnd, ref guid);
-				return true;
+				ComObjects.VirtualDesktopManager.MoveWindowToDesktop(hWnd, ref guid);
 			}
+			else
+			{
+				IntPtr view;
+				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+				ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
+			}
+		}
 
-			return false;
+		public static bool IsPinnedWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(hWnd.GetApplicationView());
+		}
+
+		public static void PinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (!ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.PinView(view);
+			}
+		}
+
+		public static void UnpinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
+			}
+		}
+
+		public static void TogglePinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
+			}
+			else
+			{
+				ComObjects.VirtualDesktopPinnedApps.PinView(view);
+			}
+		}
+
+		private static IntPtr GetApplicationView(this IntPtr hWnd)
+		{
+			IntPtr view;
+			ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+
+			return view;
 		}
 	}
 }
