@@ -458,9 +458,7 @@ namespace VirtualDesktopGridSwitcher {
                 movingWindow = hwnd;
 
                 Debug.WriteLine("Move " + hwnd + " from " + Current + " to " + index);
-                if (!VirtualDesktopHelper.MoveToDesktop(hwnd, desktops[index])) {
-                    this.VDMHelper.MoveWindowToDesktop(hwnd, desktops[index].Id);
-                }
+                VirtualDesktopHelper.MoveToDesktop(hwnd, desktops[index]);
 
                 activeWindows[index] = hwnd;
                 WinAPI.SetForegroundWindow(hwnd);
