@@ -48,8 +48,13 @@ namespace WindowsDesktop
 		public static bool IsPinnedWindow(IntPtr hWnd)
 		{
 			ThrowIfNotSupported();
+            var view = hWnd.GetApplicationView();
 
-			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(hWnd.GetApplicationView());
+            if (view != IntPtr.Zero) {
+                return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view);
+            } else {
+                throw new ArgumentNullException(nameof(hWnd)); ;
+            }
 		}
 
 		public static void PinWindow(IntPtr hWnd)
@@ -58,7 +63,7 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (!ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			if (view != IntPtr.Zero && !ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
 			{
 				ComObjects.VirtualDesktopPinnedApps.PinView(view);
 			}
@@ -70,7 +75,7 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			if (view != IntPtr.Zero && ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
 			{
 				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
 			}
@@ -82,22 +87,24 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
-			{
-				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
-			}
-			else
-			{
-				ComObjects.VirtualDesktopPinnedApps.PinView(view);
-			}
+            if (view != IntPtr.Zero) {
+                if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view)) {
+                    ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
+                } else {
+                    ComObjects.VirtualDesktopPinnedApps.PinView(view);
+                }
+            }
 		}
 
 		private static IntPtr GetApplicationView(this IntPtr hWnd)
 		{
-			IntPtr view;
-			ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
-
-			return view;
+			try {
+                IntPtr view;
+			    ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+                return view;
+            } catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) {
+                return IntPtr.Zero;
+            }
 		}
 	}
 }
