@@ -333,12 +333,14 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void ToggleWindowSticky(IntPtr hwnd) {
-            if (WindowsDesktop.Interop.ComObjects.GetVirtualDesktopPinnedApps() == null) {
-                WinAPI.SetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE,
-                  WinAPI.GetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE).XOR(WinAPI.WS_EX_TOOLWINDOW));
-            } else {
-                VirtualDesktopHelper.TogglePinWindow(hwnd);
-            }
+            try {
+                if (WindowsDesktop.Interop.ComObjects.GetVirtualDesktopPinnedApps() == null) {
+                    WinAPI.SetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE,
+                      WinAPI.GetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE).XOR(WinAPI.WS_EX_TOOLWINDOW));
+                } else {
+                    VirtualDesktopHelper.TogglePinWindow(hwnd);
+                }
+            } catch { }
         }
 
         private static bool IsWindowTopMost(IntPtr hWnd) {
@@ -454,11 +456,14 @@ namespace VirtualDesktopGridSwitcher {
                 movingWindow = hwnd;
 
                 Debug.WriteLine("Move " + hwnd + " from " + Current + " to " + index);
-                VirtualDesktopHelper.MoveToDesktop(hwnd, desktops[index]);
 
-                activeWindows[index] = hwnd;
-                WinAPI.SetForegroundWindow(hwnd);
-                Current = index;
+                try {
+                    VirtualDesktopHelper.MoveToDesktop(hwnd, desktops[index]);
+                    activeWindows[index] = hwnd;
+                    WinAPI.SetForegroundWindow(hwnd);
+                    Current = index;
+                } catch { }
+
             }
         }
 
