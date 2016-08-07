@@ -36,11 +36,14 @@ namespace WindowsDesktop
 			}
 			else
 			{
-				try { 
+				try
+				{
 					IntPtr view;
 					ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
 					ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
-				} catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) {
+				}
+				catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+				{
 					throw new ArgumentException(nameof(hWnd));
 				}
 			}
@@ -49,9 +52,11 @@ namespace WindowsDesktop
 		public static bool IsPinnedWindow(IntPtr hWnd)
 		{
 			ThrowIfNotSupported();
+
 			var view = hWnd.GetApplicationView();
 
-			if (view == IntPtr.Zero) {
+			if (view == IntPtr.Zero)
+			{
 				throw new ArgumentException(nameof(hWnd));
 			}
 
@@ -64,7 +69,8 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (view == IntPtr.Zero) {
+			if (view == IntPtr.Zero)
+			{
 				throw new ArgumentException(nameof(hWnd));
 			}
 
@@ -80,7 +86,8 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (view == IntPtr.Zero) {
+			if (view == IntPtr.Zero)
+			{
 				throw new ArgumentException(nameof(hWnd));
 			}
 
@@ -96,24 +103,31 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (view == IntPtr.Zero) {
+			if (view == IntPtr.Zero)
+			{
 				throw new ArgumentException(nameof(hWnd));
 			}
 
-			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view)) {
+			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
 				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
-			} else {
+			}
+			else
+			{
 				ComObjects.VirtualDesktopPinnedApps.PinView(view);
 			}
 		}
 
 		private static IntPtr GetApplicationView(this IntPtr hWnd)
 		{
-			try {
+			try
+			{
 				IntPtr view;
 				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
 				return view;
-			} catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) {
+			}
+			catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) 
+			{
 				return IntPtr.Zero;
 			}
 		}
