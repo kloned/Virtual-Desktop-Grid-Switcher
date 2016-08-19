@@ -508,6 +508,7 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void RegisterSwitchHotkey(Keys keycode, Action action) {
+			if(!settings.SwitchEnabled) return;
             Hotkey hk = new Hotkey() {
                 Control = settings.SwitchModifiers.Ctrl,
                 Windows = settings.SwitchModifiers.Win,
@@ -528,7 +529,8 @@ namespace VirtualDesktopGridSwitcher {
 
         private void RegisterMoveHotkey(Keys keycode, Action action)
         {
-            Hotkey hk = new Hotkey()
+			if (!settings.MoveEnabled) return;
+			Hotkey hk = new Hotkey()
             {
                 Control = settings.MoveModifiers.Ctrl,
                 Windows = settings.MoveModifiers.Win,
@@ -551,6 +553,7 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void RegisterToggleStickyHotKey() {
+			if(!settings.StickyWindowEnabled) return;
             Hotkey hk = new Hotkey() {
                 Control = settings.StickyWindowHotKey.Modifiers.Ctrl,
                 Windows = settings.StickyWindowHotKey.Modifiers.Win,
@@ -570,6 +573,7 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void RegisterToggleAlwaysOnTopHotKey() {
+			if(!this.settings.AlwaysOnTopEnabled) return;
             Hotkey hk = new Hotkey() {
                 Control = settings.AlwaysOnTopHotkey.Modifiers.Ctrl,
                 Windows = settings.AlwaysOnTopHotkey.Modifiers.Win,
