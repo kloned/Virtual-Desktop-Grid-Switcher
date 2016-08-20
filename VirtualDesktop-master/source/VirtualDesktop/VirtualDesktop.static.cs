@@ -10,8 +10,8 @@ namespace WindowsDesktop
 {
 	partial class VirtualDesktop
 	{
-		private static readonly bool isSupportedInternal = true;
-		private static readonly ConcurrentDictionary<Guid, VirtualDesktop> wrappers = new ConcurrentDictionary<Guid, VirtualDesktop>();
+		private static readonly bool _isSupportedInternal = true;
+		private static readonly ConcurrentDictionary<Guid, VirtualDesktop> _wrappers = new ConcurrentDictionary<Guid, VirtualDesktop>();
 
 
 		/// <summary>
@@ -127,9 +127,11 @@ namespace WindowsDesktop
 			{
 				desktop = ComObjects.VirtualDesktopManagerInternal.FindDesktop(ref desktopId);
 			}
-			catch (COMException ex) //when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+			catch (COMException ex)
 			{
-				return null;
+				if (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+				    return null;
+				throw;
 			}
 			var wrapper = _wrappers.GetOrAdd(desktop.GetID(), _ => new VirtualDesktop(desktop));
 
@@ -151,9 +153,11 @@ namespace WindowsDesktop
 				var desktopId = ComObjects.VirtualDesktopManager.GetWindowDesktopId(hwnd);
 				desktop = ComObjects.VirtualDesktopManagerInternal.FindDesktop(ref desktopId);
 			}
-			catch (COMException ex) //when (ex.Match(HResult.REGDB_E_CLASSNOTREG, HResult.TYPE_E_ELEMENTNOTFOUND))
+			catch (COMException ex)
 			{
-				return null;
+				if (ex.Match(HResult.REGDB_E_CLASSNOTREG, HResult.TYPE_E_ELEMENTNOTFOUND))
+				    return null;
+				throw;
 			}
 			var wrapper = _wrappers.GetOrAdd(desktop.GetID(), _ => new VirtualDesktop(desktop));
 

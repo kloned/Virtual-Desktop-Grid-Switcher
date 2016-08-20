@@ -42,9 +42,11 @@ namespace WindowsDesktop
 					ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
 					ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
 				}
-				catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+				catch (System.Runtime.InteropServices.COMException ex)
 				{
-					throw new ArgumentException(nameof(hWnd));
+                    if (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+					    throw new ArgumentException("hWnd");
+                    throw;
 				}
 			}
 		}
@@ -57,7 +59,7 @@ namespace WindowsDesktop
 
 			if (view == IntPtr.Zero)
 			{
-				throw new ArgumentException(nameof(hWnd));
+				throw new ArgumentException("hWnd");
 			}
 
 			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view);
@@ -71,7 +73,7 @@ namespace WindowsDesktop
 
 			if (view == IntPtr.Zero)
 			{
-				throw new ArgumentException(nameof(hWnd));
+				throw new ArgumentException("hWnd");
 			}
 
 			if (!ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
@@ -88,7 +90,7 @@ namespace WindowsDesktop
 
 			if (view == IntPtr.Zero)
 			{
-				throw new ArgumentException(nameof(hWnd));
+				throw new ArgumentException("hWnd");
 			}
 
 			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
@@ -105,7 +107,7 @@ namespace WindowsDesktop
 
 			if (view == IntPtr.Zero)
 			{
-				throw new ArgumentException(nameof(hWnd));
+				throw new ArgumentException("hWnd");
 			}
 
 			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
@@ -126,9 +128,11 @@ namespace WindowsDesktop
 				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
 				return view;
 			}
-			catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) 
+			catch (System.Runtime.InteropServices.COMException ex)
 			{
-				return IntPtr.Zero;
+                if (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+				    return IntPtr.Zero;
+                throw;
 			}
 		}
 	}

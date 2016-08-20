@@ -40,7 +40,9 @@ namespace WindowsDesktop.Interop
 
 		internal static void Terminate()
 		{
-			_listener?.Dispose();
+            if (_listener != null) {
+			    _listener.Dispose();
+            }
 		}
 
 

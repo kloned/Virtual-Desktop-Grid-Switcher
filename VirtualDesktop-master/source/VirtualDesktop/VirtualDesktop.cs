@@ -50,7 +50,7 @@ namespace WindowsDesktop
 		/// </summary>
 		public void Remove(VirtualDesktop fallbackDesktop)
 		{
-			if (fallbackDesktop == null) throw new ArgumentNullException();
+			if (fallbackDesktop == null) throw new ArgumentNullException("fallbackDesktop");
 
 			ComObjects.VirtualDesktopManagerInternal.RemoveDesktop(this.ComObject, fallbackDesktop.ComObject);
 		}
@@ -65,9 +65,11 @@ namespace WindowsDesktop
 			{
 				desktop = ComObjects.VirtualDesktopManagerInternal.GetAdjacentDesktop(this.ComObject, AdjacentDesktop.LeftDirection);
 			}
-			catch (COMException ex) // when (ex.Match(HResult.TYPE_E_OUTOFBOUNDS))
+			catch (COMException ex)
 			{
-				return null;
+				if (ex.Match(HResult.TYPE_E_OUTOFBOUNDS))
+				    return null;
+				throw;
 			}
 			var wrapper = _wrappers.GetOrAdd(desktop.GetID(), _ => new VirtualDesktop(desktop));
 
@@ -84,9 +86,11 @@ namespace WindowsDesktop
 			{
 				desktop = ComObjects.VirtualDesktopManagerInternal.GetAdjacentDesktop(this.ComObject, AdjacentDesktop.RightDirection);
 			}
-			catch (COMException ex) //when (ex.Match(HResult.TYPE_E_OUTOFBOUNDS))
+			catch (COMException ex)
 			{
-				return null;
+				if (ex.Match(HResult.TYPE_E_OUTOFBOUNDS))
+				    return null;
+				throw;
 			}
 			var wrapper = _wrappers.GetOrAdd(desktop.GetID(), _ => new VirtualDesktop(desktop));
 
