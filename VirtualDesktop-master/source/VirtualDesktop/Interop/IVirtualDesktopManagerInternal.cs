@@ -10,9 +10,9 @@ namespace WindowsDesktop.Interop
 	{
 		int GetCount();
 
-		void MoveViewToDesktop(IApplicationView pView, IVirtualDesktop desktop);
+		void MoveViewToDesktop(IntPtr pView, IVirtualDesktop desktop);
 
-		bool CanViewMoveDesktops(IApplicationView pView);
+		bool CanViewMoveDesktops(IntPtr pView);
 
 		IVirtualDesktop GetCurrentDesktop();
 
@@ -36,9 +36,9 @@ namespace WindowsDesktop.Interop
 	{
 		int GetCount();
 
-		void MoveViewToDesktop(IApplicationView pView, IVirtualDesktop desktop);
+		void MoveViewToDesktop(IntPtr pView, IVirtualDesktop desktop);
 
-		bool CanViewMoveDesktops(IApplicationView pView);
+		bool CanViewMoveDesktops(IntPtr pView);
 
 		IVirtualDesktop GetCurrentDesktop();
 
@@ -62,9 +62,9 @@ namespace WindowsDesktop.Interop
 	{
 		int GetCount();
 
-		void MoveViewToDesktop(IApplicationView pView, IVirtualDesktop desktop);
+		void MoveViewToDesktop(IntPtr pView, IVirtualDesktop desktop);
 
-		bool CanViewMoveDesktops(IApplicationView pView);
+		bool CanViewMoveDesktops(IntPtr pView);
 
 		IVirtualDesktop GetCurrentDesktop();
 

@@ -36,9 +36,99 @@ namespace WindowsDesktop
 			}
 			else
 			{
-				IApplicationView view;
+				try
+				{
+					IntPtr view;
+					ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+					ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
+				}
+				catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
+				{
+					throw new ArgumentException(nameof(hWnd));
+				}
+			}
+		}
+
+		public static bool IsPinnedWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (view == IntPtr.Zero)
+			{
+				throw new ArgumentException(nameof(hWnd));
+			}
+
+			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view);
+		}
+
+		public static void PinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (view == IntPtr.Zero)
+			{
+				throw new ArgumentException(nameof(hWnd));
+			}
+
+			if (!ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.PinView(view);
+			}
+		}
+
+		public static void UnpinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (view == IntPtr.Zero)
+			{
+				throw new ArgumentException(nameof(hWnd));
+			}
+
+			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
+			}
+		}
+
+		public static void TogglePinWindow(IntPtr hWnd)
+		{
+			ThrowIfNotSupported();
+
+			var view = hWnd.GetApplicationView();
+
+			if (view == IntPtr.Zero)
+			{
+				throw new ArgumentException(nameof(hWnd));
+			}
+
+			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
+			{
+				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
+			}
+			else
+			{
+				ComObjects.VirtualDesktopPinnedApps.PinView(view);
+			}
+		}
+
+		private static IntPtr GetApplicationView(this IntPtr hWnd)
+		{
+			try
+			{
+				IntPtr view;
 				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
-				ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
+				return view;
+			}
+			catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND)) 
+			{
+				return IntPtr.Zero;
 			}
 		}
 	}

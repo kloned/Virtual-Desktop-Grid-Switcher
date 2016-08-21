@@ -14,10 +14,10 @@ namespace WindowsDesktop.Interop
 
 		void UnpinAppID(string appId);
 
-		bool IsViewPinned(IApplicationView applicationView);
+		bool IsViewPinned(IntPtr applicationView);
 
-		void PinView(IApplicationView applicationView);
+		void PinView(IntPtr applicationView);
 
-		void UnpinView(IApplicationView applicationView);
+		void UnpinView(IntPtr applicationView);
 	}
 }
