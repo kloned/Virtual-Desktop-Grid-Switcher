@@ -338,9 +338,7 @@ namespace VirtualDesktopGridSwitcher {
                     WinAPI.SetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE,
                       WinAPI.GetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE).XOR(WinAPI.WS_EX_TOOLWINDOW));
                 } else {
-                    try {
-                        VirtualDesktop.TogglePinWindow(hwnd);
-                    } catch { }
+                    VirtualDesktopHelper.TogglePinWindow(hwnd);
                 }
             } catch { }
         }

@@ -11,14 +11,7 @@ namespace WindowsDesktop
 		{
 			VirtualDesktopHelper.ThrowIfNotSupported();
 
-			var view = hWnd.GetApplicationView();
-
-			if (view == null)
-			{
-				throw new ArgumentException(nameof(hWnd));
-			}
-
-			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view);
+			return ComObjects.VirtualDesktopPinnedApps.IsViewPinned(hWnd.GetApplicationView());
 		}
 
 		public static void PinWindow(IntPtr hWnd)
@@ -26,11 +19,6 @@ namespace WindowsDesktop
 			VirtualDesktopHelper.ThrowIfNotSupported();
 
 			var view = hWnd.GetApplicationView();
-
-			if (view == null)
-			{
-				throw new ArgumentException(nameof(hWnd));
-			}
 
 			if (!ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
 			{
@@ -44,35 +32,9 @@ namespace WindowsDesktop
 
 			var view = hWnd.GetApplicationView();
 
-			if (view == null)
-			{
-				throw new ArgumentException(nameof(hWnd));
-			}
-
 			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
 			{
 				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
-			}
-		}
-
-		public static void TogglePinWindow(IntPtr hWnd) 
-		{
-			VirtualDesktopHelper.ThrowIfNotSupported();
-
-			var view = hWnd.GetApplicationView();
-
-			if (view == null)
-			{
-				throw new ArgumentException(nameof(hWnd));
-			}
-
-			if (ComObjects.VirtualDesktopPinnedApps.IsViewPinned(view))
-			{
-				ComObjects.VirtualDesktopPinnedApps.UnpinView(view);
-			}
-			else
-			{
-				ComObjects.VirtualDesktopPinnedApps.PinView(view);
 			}
 		}
 
@@ -100,20 +62,6 @@ namespace WindowsDesktop
 			if (ComObjects.VirtualDesktopPinnedApps.IsAppIdPinned(appId))
 			{
 				ComObjects.VirtualDesktopPinnedApps.UnpinAppID(appId);
-			}
-		}
-
-		public static void TogglePinApplication(string appId) 
-		{
-			VirtualDesktopHelper.ThrowIfNotSupported();
-
-			if (ComObjects.VirtualDesktopPinnedApps.IsAppIdPinned(appId))
-			{
-				ComObjects.VirtualDesktopPinnedApps.UnpinAppID(appId);
-			}
-			else
-			{
-				ComObjects.VirtualDesktopPinnedApps.PinAppID(appId);
 			}
 		}
 	}

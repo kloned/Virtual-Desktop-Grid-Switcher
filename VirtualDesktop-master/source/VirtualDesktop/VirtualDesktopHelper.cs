@@ -36,16 +36,9 @@ namespace WindowsDesktop
 			}
 			else
 			{
-				try
-				{
-					IApplicationView view;
-					ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
-					ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
-				}
-				catch (System.Runtime.InteropServices.COMException ex) when (ex.Match(HResult.TYPE_E_ELEMENTNOTFOUND))
-				{
-					throw new ArgumentException(nameof(hWnd));
-				}
+				IApplicationView view;
+				ComObjects.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
+				ComObjects.VirtualDesktopManagerInternal.MoveViewToDesktop(view, virtualDesktop.ComObject);
 			}
 		}
 	}
