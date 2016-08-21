@@ -61,13 +61,13 @@ namespace WindowsDesktop.Interop
 		{
 			if (this._manager14328 != null)
 			{
-				this._manager14328?.MoveViewToDesktop(pView, desktop);
+				this._manager14328.MoveViewToDesktop(pView, desktop);
 				return;
 			}
 
 			if (this._manager10240 != null)
 			{
-				this._manager10240?.MoveViewToDesktop(pView, desktop);
+				this._manager10240.MoveViewToDesktop(pView, desktop);
 				return;
 			}
 
@@ -164,13 +164,13 @@ namespace WindowsDesktop.Interop
 		{
 			if (this._manager14328 != null)
 			{
-				this._manager14328?.SwitchDesktop(desktop);
+				this._manager14328.SwitchDesktop(desktop);
 				return;
 			}
 
 			if (this._manager10240 != null)
 			{
-				this._manager10240?.SwitchDesktop(desktop);
+				this._manager10240.SwitchDesktop(desktop);
 				return;
 			}
 
