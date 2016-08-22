@@ -139,9 +139,11 @@ namespace VirtualDesktopGridSwitcher {
                         }
                     }
                 
-                    if (!ActivateWindow(lastActiveWindow)) {
-                        Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
-                        WinAPI.SetForegroundWindow(fgHwnd);
+                    if (activatingBrowserWindow == IntPtr.Zero) {
+                        if (!ActivateWindow(lastActiveWindow)) {
+                            Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
+                            WinAPI.SetForegroundWindow(fgHwnd);
+                        }
                     }
                 }
 
@@ -261,10 +263,10 @@ namespace VirtualDesktopGridSwitcher {
                             lastMoveOnNewWindowOpenedTime = DateTime.Now;
                         } else {
                             var delay = (DateTime.Now - lastMoveOnNewWindowOpenedTime).TotalMilliseconds;
-                            if (delay < settings.MoveOnNewWindowDetectTimeoutMs &&
+                            if (delay < 1200 &&
                                 lastMoveOnNewWindowOpenedFromDesktop != Current) {
 
-                                // work around browser activtation
+                                // work around browser activation
                                 if (lastMoveOnNewWindowHwnd == hwnd) {
                                     Debug.WriteLine((int)delay + " Reset Move New Window Timeout");
                                     lastMoveOnNewWindowOpenedTime = DateTime.Now;
