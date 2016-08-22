@@ -266,8 +266,7 @@ namespace VirtualDesktopGridSwitcher {
                             if (delay < 1200 &&
                                 lastMoveOnNewWindowOpenedFromDesktop != Current) {
 
-                                // work around browser activation
-                                if (lastMoveOnNewWindowHwnd == hwnd) {
+                                if (lastMoveOnNewWindowHwnd == hwnd || GetWindowTitle(hwnd) == ("Opening - " + GetWindowTitle(lastMoveOnNewWindowHwnd))) {
                                     Debug.WriteLine((int)delay + " Reset Move New Window Timeout");
                                     lastMoveOnNewWindowOpenedTime = DateTime.Now;
                                     return;
@@ -276,7 +275,7 @@ namespace VirtualDesktopGridSwitcher {
                                     lastMoveOnNewWindowHwnd = IntPtr.Zero;
                                     lastMoveOnNewWindowOpenedTime = DateTime.MinValue;
 
-                                    Debug.WriteLine((int)delay + " Move New Window " + hwnd + " to " + lastMoveOnNewWindowOpenedFromDesktop);
+                                    Debug.WriteLine((int)delay + " Move New Window " + hwnd + " " + GetWindowTitle(hwnd) + " to " + lastMoveOnNewWindowOpenedFromDesktop);
                                     int retryTime = 0;
                                     while (!MoveWindow(hwnd, lastMoveOnNewWindowOpenedFromDesktop) && retryTime < 1000) {
                                         // Need a little time before MoveToDesktop will recognise new window
