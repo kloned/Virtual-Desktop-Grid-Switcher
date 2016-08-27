@@ -236,8 +236,10 @@ namespace VirtualDesktopGridSwitcher {
             if (hwnd != IntPtr.Zero) {
                 var desktop = VirtualDesktop.FromHwnd(hwnd);
                 if (desktop != null && desktop == VirtualDesktop.Current) {
-                    Debug.WriteLine("Activate " + Current + " " + hwnd);
-                    WinAPI.SetForegroundWindow(hwnd);
+                    if (hwnd != WinAPI.GetForegroundWindow()) {
+                        Debug.WriteLine("Activate " + Current + " " + hwnd);
+                        WinAPI.SetForegroundWindow(hwnd);
+                    }
                     return true;
                 }
             }
