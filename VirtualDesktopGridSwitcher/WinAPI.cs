@@ -283,6 +283,8 @@ namespace VirtualDesktopGridSwitcher {
         [DllImport("user32.dll")]
         public static extern short GetAsyncKeyState(int vKey);
 
+        public const uint WM_KILLFOCUS = 0x0008;
+
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);

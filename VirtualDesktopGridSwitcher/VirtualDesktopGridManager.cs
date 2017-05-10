@@ -446,6 +446,7 @@ namespace VirtualDesktopGridSwitcher {
 
         public void Switch(int index) {
             activeWindows[Current] = WinAPI.GetForegroundWindow();
+            WinAPI.PostMessage(activeWindows[Current], WinAPI.WM_KILLFOCUS, IntPtr.Zero, IntPtr.Zero);
             Debug.WriteLine("Switch Active " + Current + " " + activeWindows[Current]);
             Current = index;
         }
