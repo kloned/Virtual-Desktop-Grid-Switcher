@@ -1,11 +1,11 @@
 ÔªøVirtual Desktop Grid Switcher Installation
 ==========================================
 
-I hate installers that do god knows what to your computer so you won‚Äôt find one here but you will need to do a few things manually.
+I hate installers that do god knows what to your computer so you will not find one here but you will need to do a few things manually.
 
 1)  Decide where you want to put the VirtualDesktopGridSwitcher installation folder. 
 
-Personally I like to create a folder called Programs alongside the Documents, Pictures, Videos folders in my user folder ‚Äì something like C:\\Users\\simonl\\Programs ‚Äì and then create a folder VirtualDesktopGridSwitcher below that. 
+Personally I like to create a folder called Programs alongside the Documents, Pictures, Videos folders in my user folder ñ something like C:\\Users\\simonl\\Programs ñ and then create a folder VirtualDesktopGridSwitcher below that. 
    
 2)  Download the installation zip file from https://sourceforge.net/projects/virtual-desktop-grid-switcher/files.
 
@@ -19,11 +19,15 @@ If you are upgrading you can just copy over the top. You may want to exclude the
   
 5)  Double-click VirtualDesktopGridSwitcher.exe to run it.
 
-6)  To keep the System Tray Icon always visible open Settings -&gt; Personalisation -&gt; Taskbar and click ‚ÄúSelect which icons appear on the taskbar‚Äù which is some way down that page. Find Virtual Desktop Grid Switcher and set to on.
+6)  If another program is already using a "hotkey" key combination used to switch desktops you will be warned that it could not be assigned.
 
-[[img src=image3.png alt=Settings]]
+You will either need to change the key combinations in settings (see User Guide) or find out what is using it already and stop it from doing so. Often your graphics software has some of these keys assigned - try right clicking on the desktop and look for Graphics Options -&gt; Hot Keys or Graphics Properties -&gt; Options.
 
-7)  If you want VirtualDesktopGridSwitcher to run on startup add a shortcut to VirtualDesktopGridSwitcher.exe to your startup folder. You can open your startup folder by pressing the Windows key and R key together to open the run dialog and entering shell:startup
+7)  To keep the System Tray Icon always visible open Settings -&gt; Personalisation -&gt; Taskbar and click ìSelect which icons appear on the taskbarî which is some way down that page. Find Virtual Desktop Grid Switcher and set to on.
+
+[[img src=image4.png alt=Settings]]
+
+8)  If you want VirtualDesktopGridSwitcher to run on startup add a shortcut to VirtualDesktopGridSwitcher.exe to your startup folder. You can open your startup folder by pressing the Windows key and R key together to open the run dialog and entering shell:startup
 
 [[img src=image2.png alt=RunDialog]]
 
