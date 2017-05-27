@@ -261,13 +261,13 @@ namespace VirtualDesktopGridSwitcher {
 
                     if (IsMoveOnNewWindowType(hwnd)) {
                         if (windowDesktopId != Current) {
-                            Debug.WriteLine("Opened MoveOnNewWindow from " + Current);
+                            Debug.WriteLine("Opened MoveOnNewWindow from " + Current + " to " + windowDesktopId);
                             lastMoveOnNewWindowHwnd = hwnd;
                             lastMoveOnNewWindowOpenedFromDesktop = Current;
                             lastMoveOnNewWindowOpenedTime = DateTime.Now;
                         } else {
                             var delay = (DateTime.Now - lastMoveOnNewWindowOpenedTime).TotalMilliseconds;
-                            if (delay < 1200 &&
+                            if (delay < settings.MoveOnNewWindowDetectTimeoutMs &&
                                 lastMoveOnNewWindowOpenedFromDesktop != Current) {
 
                                 if (lastMoveOnNewWindowHwnd == hwnd || GetWindowTitle(hwnd) == ("Opening - " + GetWindowTitle(lastMoveOnNewWindowHwnd))) {
@@ -281,7 +281,7 @@ namespace VirtualDesktopGridSwitcher {
 
                                     Debug.WriteLine((int)delay + " Move New Window " + hwnd + " " + GetWindowTitle(hwnd) + " to " + lastMoveOnNewWindowOpenedFromDesktop);
                                     int retryTime = 0;
-                                    while (!MoveWindow(hwnd, lastMoveOnNewWindowOpenedFromDesktop) && retryTime < 1500) {
+                                    while (!MoveWindow(hwnd, lastMoveOnNewWindowOpenedFromDesktop) && retryTime < (settings.MoveOnNewWindowDetectTimeoutMs + 300)) {
                                         // Need a little time before MoveToDesktop will recognise new window
                                         int addTime = 100;
                                         Thread.Sleep(addTime);
@@ -341,13 +341,16 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private bool IsWindowDefaultBrowser(IntPtr hwnd, SettingValues.BrowserInfo browserInfo) {
-            return (browserInfo != null && GetWindowExeName(hwnd) == browserInfo.ExeName);
+            var exename = GetWindowExeName(hwnd);
+            return (browserInfo != null && exename != null && exename.ToUpper() == browserInfo.ExeName.ToUpper());
         }
 
         private bool IsMoveOnNewWindowType(IntPtr hwnd) {
+            var exename = GetWindowExeName(hwnd);
             return (
+                exename != null &&
                 settings.MoveOnNewWindowExeNames != null &&
-                settings.MoveOnNewWindowExeNames.Contains(GetWindowExeName(hwnd)));
+                settings.MoveOnNewWindowExeNames.Any(n => n.ToUpper() == exename.ToUpper()));
         }
 
         private void ToggleWindowSticky(IntPtr hwnd) {
@@ -442,7 +445,11 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         public void Switch(int index) {
-            activeWindows[Current] = WinAPI.GetForegroundWindow();
+            var activeHwnd = WinAPI.GetForegroundWindow();
+            if (activeHwnd != activatingBrowserWindow) {
+                activeWindows[Current] = activeHwnd;
+            }
+            WinAPI.PostMessage(activeHwnd, WinAPI.WM_KILLFOCUS, IntPtr.Zero, IntPtr.Zero);
             Debug.WriteLine("Switch Active " + Current + " " + activeWindows[Current]);
             Current = index;
         }

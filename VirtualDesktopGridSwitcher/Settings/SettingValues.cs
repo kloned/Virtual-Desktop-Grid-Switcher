@@ -67,8 +67,12 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
         public List<BrowserInfo> BrowserInfoList = new List<BrowserInfo>();
 
+        public int MoveOnNewWindowDetectTimeoutMs = 1200;
+
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
+
+        public int SettingsVersion;
 
         private static string SettingsFileName { 
             get {
@@ -97,7 +101,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
             }
 
             if (MoveOnNewWindowExeNames.Count == 0) {
-                MoveOnNewWindowExeNames = new List<string>() { "WINWORD.EXE", "EXCEL.EXE" };
+                MoveOnNewWindowExeNames = new List<string>() { "WINWORD.EXE", "EXCEL.EXE", "AcroRd32.exe" };
             }
         }
 
@@ -115,7 +119,23 @@ namespace VirtualDesktopGridSwitcher.Settings {
             }
 
             settings.SetListDefaults();
+
+            settings.ApplyVersionUpdates();
+
             return settings;
+        }
+
+        private void ApplyVersionUpdates() {
+            if (SettingsVersion == 0) {
+                if (!MoveOnNewWindowExeNames.Contains("AcroRd32.exe")) {
+                    MoveOnNewWindowExeNames.Add("AcroRd32.exe");
+                }
+                if (MoveOnNewWindowDetectTimeoutMs == 500) {
+                    MoveOnNewWindowDetectTimeoutMs = 1200;
+                }
+                SettingsVersion = 1;
+                this.Save();
+            }
         }
 
         private static void LoadOldSettings(SettingValues settings) {

@@ -79,6 +79,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
