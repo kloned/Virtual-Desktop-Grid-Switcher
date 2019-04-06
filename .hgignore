@@ -14,5 +14,6 @@ ipch/*
 VirtualDesktopGridSwitcher.VC.*
 ~$*.docx
 Thumbs.db
+VirtualDesktop-master/source/packages
 syntax: regexp
 .vs
