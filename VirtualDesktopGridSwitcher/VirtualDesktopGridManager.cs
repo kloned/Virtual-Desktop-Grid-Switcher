@@ -355,11 +355,10 @@ namespace VirtualDesktopGridSwitcher {
 
         private void ToggleWindowSticky(IntPtr hwnd) {
             try {
-                if (WindowsDesktop.Interop.ComObjects.GetVirtualDesktopPinnedApps() == null) {
-                    WinAPI.SetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE,
-                      WinAPI.GetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE).XOR(WinAPI.WS_EX_TOOLWINDOW));
+                if (VirtualDesktop.IsPinnedWindow(hwnd)) {
+                    VirtualDesktop.UnpinWindow(hwnd);
                 } else {
-                    VirtualDesktopHelper.TogglePinWindow(hwnd);
+                    VirtualDesktop.PinWindow(hwnd);
                 }
             } catch { }
         }
