@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace WindowsDesktop.Interop
 {
 	[ComImport]
-	[Guid("4ce81583-1e4c-4632-a621-07a53543148f")]
+	[Guid("00000000-0000-0000-0000-000000000000") /* replace at runtime */]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface IVirtualDesktopPinnedApps
 	{
@@ -14,10 +14,10 @@ namespace WindowsDesktop.Interop
 
 		void UnpinAppID(string appId);
 
-		bool IsViewPinned(IntPtr applicationView);
+		bool IsViewPinned(IApplicationView applicationView);
 
-		void PinView(IntPtr applicationView);
+		void PinView(IApplicationView applicationView);
 
-		void UnpinView(IntPtr applicationView);
+		void UnpinView(IApplicationView applicationView);
 	}
 }

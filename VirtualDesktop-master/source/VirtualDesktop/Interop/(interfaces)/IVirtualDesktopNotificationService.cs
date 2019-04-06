@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace WindowsDesktop.Interop
 {
 	[ComImport]
-	[Guid("0cd45e71-d927-4f15-8b0a-8fef525337bf")]
+	[Guid("00000000-0000-0000-0000-000000000000") /* replace at runtime */]
 	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface IVirtualDesktopNotificationService
 	{
