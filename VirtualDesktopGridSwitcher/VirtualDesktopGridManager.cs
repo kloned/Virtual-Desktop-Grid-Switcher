@@ -116,39 +116,45 @@ namespace VirtualDesktopGridSwitcher {
                 return settings.Rows * settings.Columns;
             }
         }
-        
-        private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e)
-        {
+
+        private void VirtualDesktop_CurrentChanged(object sender, VirtualDesktopChangedEventArgs e) {
+            var newDesktop = desktopIdLookup[e.NewDesktop];
+            Debug.WriteLine("Switched to " + newDesktop);
+
             lock (callbackMutex) {
-
-                var newDesktop = desktopIdLookup[VirtualDesktop.Current];
-                Debug.WriteLine("Switched to " + newDesktop);
-
                 this._current = newDesktop;
                 sysTrayProcess.ShowIconForDesktop(Current);
 
-                var browserInfo = settings.GetBrowserToActivateInfo();
-                if (movingWindow == IntPtr.Zero || !IsWindowDefaultBrowser(movingWindow, browserInfo)) {
+                if (VirtualDesktop.Current == e.NewDesktop) {
+                    DoActivateBrowser(newDesktop);
+                } else {
+                    Debug.WriteLine("Skipped OnDesktopChanged()");
+                }
+            }
+        }
 
-                    var fgHwnd = WinAPI.GetForegroundWindow();
-                    var lastActiveWindow = activeWindows[Current];
+        private void DoActivateBrowser(int newDesktop) {
+            var browserInfo = settings.GetBrowserToActivateInfo();
+            if (movingWindow == IntPtr.Zero || !IsWindowDefaultBrowser(movingWindow, browserInfo)) {
 
-                    if (browserInfo != null) {
-                        if (lastActiveBrowserWindows[Current] != activeWindows[Current]) {
-                            FindActivateBrowserWindow(lastActiveBrowserWindows[Current], browserInfo);
-                        }
-                    }
-                
-                    if (!ActivateWindow(lastActiveWindow)) {
-                        if (fgHwnd != WinAPI.GetForegroundWindow()) {
-                            Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
-                            WinAPI.SetForegroundWindow(fgHwnd);
-                        }
+                var fgHwnd = WinAPI.GetForegroundWindow();
+                var lastActiveWindow = activeWindows[Current];
+
+                if (browserInfo != null) {
+                    if (lastActiveBrowserWindows[Current] != activeWindows[Current]) {
+                        FindActivateBrowserWindow(lastActiveBrowserWindows[Current], browserInfo);
                     }
                 }
 
-                movingWindow = IntPtr.Zero;
+                if (!ActivateWindow(lastActiveWindow)) {
+                    if (fgHwnd != WinAPI.GetForegroundWindow()) {
+                        Debug.WriteLine("Reactivate " + Current + " " + fgHwnd);
+                        WinAPI.SetForegroundWindow(fgHwnd);
+                    }
+                }
             }
+
+            movingWindow = IntPtr.Zero;
         }
 
         private class BrowserWinInfo {
@@ -355,11 +361,10 @@ namespace VirtualDesktopGridSwitcher {
 
         private void ToggleWindowSticky(IntPtr hwnd) {
             try {
-                if (WindowsDesktop.Interop.ComObjects.GetVirtualDesktopPinnedApps() == null) {
-                    WinAPI.SetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE,
-                      WinAPI.GetWindowLongPtr(hwnd, WinAPI.GWL_EXSTYLE).XOR(WinAPI.WS_EX_TOOLWINDOW));
+                if (VirtualDesktop.IsPinnedWindow(hwnd)) {
+                    VirtualDesktop.UnpinWindow(hwnd);
                 } else {
-                    VirtualDesktopHelper.TogglePinWindow(hwnd);
+                    VirtualDesktop.PinWindow(hwnd);
                 }
             } catch { }
         }
@@ -450,7 +455,7 @@ namespace VirtualDesktopGridSwitcher {
                 activeWindows[Current] = activeHwnd;
             }
             WinAPI.PostMessage(activeHwnd, WinAPI.WM_KILLFOCUS, IntPtr.Zero, IntPtr.Zero);
-            Debug.WriteLine("Switch Active " + Current + " " + activeWindows[Current]);
+            Debug.WriteLine("Switch Active " + Current + " (" + activeWindows[Current] + ") to " + index + " (" + activeWindows[index] + ")");
             Current = index;
         }
 
