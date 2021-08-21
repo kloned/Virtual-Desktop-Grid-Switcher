@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Windows.Forms;
 
 namespace VirtualDesktopGridSwitcher.Settings {
@@ -41,27 +42,34 @@ namespace VirtualDesktopGridSwitcher.Settings {
             checkBoxWinModifierSwitch.Checked = settings.SwitchModifiers.Win;
             checkBoxAltModifierSwitch.Checked = settings.SwitchModifiers.Alt;
             checkBoxShiftModifierSwitch.Checked = settings.SwitchModifiers.Shift;
+	        checkBoxEnabledSwitch.Checked = this.settings.SwitchEnabled;
 
             checkBoxCtrlModifierMove.Checked = settings.MoveModifiers.Ctrl;
             checkBoxWinModifierMove.Checked = settings.MoveModifiers.Win;
             checkBoxAltModifierMove.Checked = settings.MoveModifiers.Alt;
             checkBoxShiftModifierMove.Checked = settings.MoveModifiers.Shift;
+			checkBoxEnabledMove.Checked = this.settings.MoveEnabled;
 
-            checkBoxFKeys.Checked = settings.FKeysForNumbers;
+			checkBoxFKeys.Checked = settings.FKeysForNumbers;
 
+	        
             checkBoxCtrlModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Ctrl;
             checkBoxWinModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Win;
             checkBoxAltModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Alt;
             checkBoxShiftModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Shift;
             comboBoxKeySticky.SelectedItem = settings.StickyWindowHotKey.Key;
+	        checkBoxEnabledSticky.Checked = this.settings.StickyWindowEnabled;
 
             checkBoxCtrlModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Ctrl;
             checkBoxWinModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Win;
             checkBoxAltModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Alt;
             checkBoxShiftModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Shift;
             comboBoxAlwaysOnTopKey.SelectedItem = settings.AlwaysOnTopHotkey.Key;
+	        checkBoxEnabledAlwaysOnTop.Checked = this.settings.AlwaysOnTopEnabled;
 
             checkBoxActivateWebBrowser.Checked = settings.ActivateWebBrowserOnSwitch;
+
+
         }
 
         private bool SaveValues() {
@@ -100,11 +108,13 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.SwitchModifiers.Win = checkBoxWinModifierSwitch.Checked;
             settings.SwitchModifiers.Alt = checkBoxAltModifierSwitch.Checked;
             settings.SwitchModifiers.Shift = checkBoxShiftModifierSwitch.Checked;
+	        settings.SwitchEnabled = this.checkBoxEnabledSwitch.Checked;
 
             settings.MoveModifiers.Ctrl = checkBoxCtrlModifierMove.Checked;
             settings.MoveModifiers.Win = checkBoxWinModifierMove.Checked;
             settings.MoveModifiers.Alt = checkBoxAltModifierMove.Checked;
             settings.MoveModifiers.Shift = checkBoxShiftModifierMove.Checked;
+	        settings.MoveEnabled = this.checkBoxEnabledMove.Checked;
 
             settings.FKeysForNumbers = checkBoxFKeys.Checked;
 
@@ -113,12 +123,14 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.StickyWindowHotKey.Modifiers.Alt = checkBoxAltModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Shift = checkBoxShiftModifierSticky.Checked;
             settings.StickyWindowHotKey.Key = (Keys)comboBoxKeySticky.SelectedItem;
+	        settings.StickyWindowEnabled = this.checkBoxEnabledSticky.Checked;
 
             settings.AlwaysOnTopHotkey.Modifiers.Ctrl = checkBoxCtrlModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Win = checkBoxWinModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Alt = checkBoxAltModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Shift = checkBoxShiftModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Key = (Keys)comboBoxAlwaysOnTopKey.SelectedItem;
+	        settings.AlwaysOnTopEnabled = this.checkBoxEnabledAlwaysOnTop.Checked;
 
             settings.ActivateWebBrowserOnSwitch = checkBoxActivateWebBrowser.Checked;
 
