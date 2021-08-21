@@ -39,11 +39,14 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 Ctrl = true, Win = false, Alt = true, Shift = false
             };
 
-        
-        public Modifiers MoveModifiers =
+		public bool SwitchEnabled = true;
+
+		public Modifiers MoveModifiers =
             new Modifiers {
                 Ctrl = true, Win = false, Alt = true, Shift = true
             };
+
+		public bool MoveEnabled = true;
         
         public bool FKeysForNumbers = false;
 
@@ -55,13 +58,17 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 }
             };
 
-        public Hotkey StickyWindowHotKey =
+		public bool AlwaysOnTopEnabled = true;
+
+		public Hotkey StickyWindowHotKey =
             new Hotkey {
                 Key = Keys.Space,
                 Modifiers = new Modifiers {
                     Ctrl = true, Win = false, Alt = true, Shift = true
                 }
             };
+
+	    public bool StickyWindowEnabled = true;
 
         public bool ActivateWebBrowserOnSwitch = true;
 
