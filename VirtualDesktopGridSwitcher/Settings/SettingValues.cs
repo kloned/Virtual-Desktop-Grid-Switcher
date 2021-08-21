@@ -47,8 +47,21 @@ namespace VirtualDesktopGridSwitcher.Settings {
             };
 
 		public bool MoveEnabled = true;
-        
-        public bool FKeysForNumbers = false;
+
+        public bool NumbersEnabled = true;
+        public bool FKeysEnabled = false;
+
+        public bool Set1Enabled = true;
+        public Keys LeftKey1 = Keys.Left;
+        public Keys RightKey1 = Keys.Right;
+        public Keys UpKey1 = Keys.Up;
+        public Keys DownKey1 = Keys.Down;
+
+        public bool Set2Enabled = false;
+        public Keys LeftKey2 = Keys.H;
+        public Keys RightKey2 = Keys.L;
+        public Keys UpKey2 = Keys.J;
+        public Keys DownKey2 = Keys.K;
 
         public Hotkey AlwaysOnTopHotkey =
             new Hotkey {
@@ -74,7 +87,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
         public List<BrowserInfo> BrowserInfoList = new List<BrowserInfo>();
 
-        public int MoveOnNewWindowDetectTimeoutMs = 1200;
+        public int MoveOnNewWindowDetectTimeoutMs = 5000;
 
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
@@ -133,6 +146,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
         }
 
         private void ApplyVersionUpdates() {
+            bool save = false;
+
             if (SettingsVersion == 0) {
                 if (!MoveOnNewWindowExeNames.Contains("AcroRd32.exe")) {
                     MoveOnNewWindowExeNames.Add("AcroRd32.exe");
@@ -141,7 +156,20 @@ namespace VirtualDesktopGridSwitcher.Settings {
                     MoveOnNewWindowDetectTimeoutMs = 1200;
                 }
                 SettingsVersion = 1;
-                this.Save();
+                save = true;
+            }
+
+            if (SettingsVersion == 1) {
+                if (MoveOnNewWindowDetectTimeoutMs == 1200) {
+                    MoveOnNewWindowDetectTimeoutMs = 5000;
+                }
+                NumbersEnabled = !FKeysEnabled;
+                SettingsVersion = 2;
+                save = true;
+            }
+
+            if (save) {
+                Save();
             }
         }
 
@@ -182,6 +210,12 @@ namespace VirtualDesktopGridSwitcher.Settings {
             if (moveShift != null) {
                 settings.MoveModifiers.Shift = (bool)moveShift;
             }
+
+            var fKeysForNumbers = xdoc.Element("SettingValues").Element("FKeysForNumbers");
+            if (fKeysForNumbers != null) {
+                settings.FKeysEnabled = (bool)fKeysForNumbers;
+            }
+
         }
 
         public bool Save() {

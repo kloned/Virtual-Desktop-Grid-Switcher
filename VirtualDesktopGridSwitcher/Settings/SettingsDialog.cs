@@ -10,18 +10,30 @@ namespace VirtualDesktopGridSwitcher.Settings {
         private SettingValues settings;
 
         public SettingsDialog(SettingValues settings) {
-            
+
             this.settings = settings;
 
             InitializeComponent();
 
-            List<Keys> stickyKeyValues = Enum.GetValues(typeof(Keys)).Cast<Keys>().Where(v => v > 0).ToList();
-            comboBoxKeySticky.DataSource = stickyKeyValues;
+            PopulateComboBoxKeyValues(comboBoxLeft1);
+            PopulateComboBoxKeyValues(comboBoxRight1);
+            PopulateComboBoxKeyValues(comboBoxUp1);
+            PopulateComboBoxKeyValues(comboBoxDown1);
 
-            List<Keys> alwaysOnTopKeyValues = Enum.GetValues(typeof(Keys)).Cast<Keys>().Where(v => v > 0).ToList();
-            comboBoxAlwaysOnTopKey.DataSource = alwaysOnTopKeyValues;
+            PopulateComboBoxKeyValues(comboBoxLeft2);
+            PopulateComboBoxKeyValues(comboBoxRight2);
+            PopulateComboBoxKeyValues(comboBoxUp2);
+            PopulateComboBoxKeyValues(comboBoxDown2);
+
+            PopulateComboBoxKeyValues(comboBoxKeySticky);
+            PopulateComboBoxKeyValues(comboBoxAlwaysOnTopKey);
 
             LoadValues();
+        }
+
+        private static void PopulateComboBoxKeyValues(ComboBox comboBox) {
+            List<Keys> keyValues = Enum.GetValues(typeof(Keys)).Cast<Keys>().Where(v => v > 0).ToList();
+            comboBox.DataSource = keyValues;
         }
 
         protected override void OnVisibleChanged(EventArgs e) {
@@ -42,34 +54,42 @@ namespace VirtualDesktopGridSwitcher.Settings {
             checkBoxWinModifierSwitch.Checked = settings.SwitchModifiers.Win;
             checkBoxAltModifierSwitch.Checked = settings.SwitchModifiers.Alt;
             checkBoxShiftModifierSwitch.Checked = settings.SwitchModifiers.Shift;
-	        checkBoxEnabledSwitch.Checked = this.settings.SwitchEnabled;
+	        checkBoxEnabledSwitch.Checked = settings.SwitchEnabled;
 
             checkBoxCtrlModifierMove.Checked = settings.MoveModifiers.Ctrl;
             checkBoxWinModifierMove.Checked = settings.MoveModifiers.Win;
             checkBoxAltModifierMove.Checked = settings.MoveModifiers.Alt;
             checkBoxShiftModifierMove.Checked = settings.MoveModifiers.Shift;
-			checkBoxEnabledMove.Checked = this.settings.MoveEnabled;
+			checkBoxEnabledMove.Checked = settings.MoveEnabled;
 
-			checkBoxFKeys.Checked = settings.FKeysForNumbers;
+			checkBoxFKeys.Checked = settings.FKeysEnabled;
+            checkBoxNumbers.Checked = settings.NumbersEnabled;
 
-	        
+            checkBoxSet1.Checked = settings.Set1Enabled;
+            comboBoxLeft1.SelectedItem = settings.LeftKey1;
+            comboBoxRight1.SelectedItem = settings.RightKey1;
+            comboBoxUp1.SelectedItem = settings.UpKey1;
+            comboBoxDown1.SelectedItem = settings.DownKey1;
+
+            checkBoxSet2.Checked = settings.Set2Enabled;
+            comboBoxLeft2.SelectedItem = settings.LeftKey2;
+            comboBoxRight2.SelectedItem = settings.RightKey2;
+            comboBoxUp2.SelectedItem = settings.UpKey2;
+            comboBoxDown2.SelectedItem = settings.DownKey2;
+
             checkBoxCtrlModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Ctrl;
             checkBoxWinModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Win;
             checkBoxAltModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Alt;
             checkBoxShiftModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Shift;
             comboBoxKeySticky.SelectedItem = settings.StickyWindowHotKey.Key;
-	        checkBoxEnabledSticky.Checked = this.settings.StickyWindowEnabled;
+	        checkBoxEnabledSticky.Checked = settings.StickyWindowEnabled;
 
             checkBoxCtrlModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Ctrl;
             checkBoxWinModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Win;
             checkBoxAltModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Alt;
             checkBoxShiftModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Shift;
             comboBoxAlwaysOnTopKey.SelectedItem = settings.AlwaysOnTopHotkey.Key;
-	        checkBoxEnabledAlwaysOnTop.Checked = this.settings.AlwaysOnTopEnabled;
-
-            checkBoxActivateWebBrowser.Checked = settings.ActivateWebBrowserOnSwitch;
-
-
+	        checkBoxEnabledAlwaysOnTop.Checked = settings.AlwaysOnTopEnabled;
         }
 
         private bool SaveValues() {
@@ -108,31 +128,42 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.SwitchModifiers.Win = checkBoxWinModifierSwitch.Checked;
             settings.SwitchModifiers.Alt = checkBoxAltModifierSwitch.Checked;
             settings.SwitchModifiers.Shift = checkBoxShiftModifierSwitch.Checked;
-	        settings.SwitchEnabled = this.checkBoxEnabledSwitch.Checked;
+	        settings.SwitchEnabled = checkBoxEnabledSwitch.Checked;
 
             settings.MoveModifiers.Ctrl = checkBoxCtrlModifierMove.Checked;
             settings.MoveModifiers.Win = checkBoxWinModifierMove.Checked;
             settings.MoveModifiers.Alt = checkBoxAltModifierMove.Checked;
             settings.MoveModifiers.Shift = checkBoxShiftModifierMove.Checked;
-	        settings.MoveEnabled = this.checkBoxEnabledMove.Checked;
+	        settings.MoveEnabled = checkBoxEnabledMove.Checked;
 
-            settings.FKeysForNumbers = checkBoxFKeys.Checked;
+            settings.FKeysEnabled = checkBoxFKeys.Checked;
+            settings.NumbersEnabled = checkBoxNumbers.Checked;
+
+            settings.Set1Enabled = checkBoxSet1.Checked;
+            settings.LeftKey1 = (Keys)comboBoxLeft1.SelectedItem;
+            settings.RightKey1 = (Keys)comboBoxRight1.SelectedItem;
+            settings.UpKey1 = (Keys)comboBoxUp1.SelectedItem;
+            settings.DownKey1 = (Keys)comboBoxDown1.SelectedItem;
+
+            settings.Set2Enabled = checkBoxSet2.Checked;
+            settings.LeftKey2 = (Keys)comboBoxLeft2.SelectedItem;
+            settings.RightKey2 = (Keys)comboBoxRight2.SelectedItem;
+            settings.UpKey2 = (Keys)comboBoxUp2.SelectedItem;
+            settings.DownKey2 = (Keys)comboBoxDown2.SelectedItem;
 
             settings.StickyWindowHotKey.Modifiers.Ctrl = checkBoxCtrlModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Win = checkBoxWinModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Alt = checkBoxAltModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Shift = checkBoxShiftModifierSticky.Checked;
             settings.StickyWindowHotKey.Key = (Keys)comboBoxKeySticky.SelectedItem;
-	        settings.StickyWindowEnabled = this.checkBoxEnabledSticky.Checked;
+	        settings.StickyWindowEnabled = checkBoxEnabledSticky.Checked;
 
             settings.AlwaysOnTopHotkey.Modifiers.Ctrl = checkBoxCtrlModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Win = checkBoxWinModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Alt = checkBoxAltModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Shift = checkBoxShiftModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Key = (Keys)comboBoxAlwaysOnTopKey.SelectedItem;
-	        settings.AlwaysOnTopEnabled = this.checkBoxEnabledAlwaysOnTop.Checked;
-
-            settings.ActivateWebBrowserOnSwitch = checkBoxActivateWebBrowser.Checked;
+	        settings.AlwaysOnTopEnabled = checkBoxEnabledAlwaysOnTop.Checked;
 
             if (!settings.ApplySettings()) {
                 MessageBox.Show(this, "Failed to apply settings", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

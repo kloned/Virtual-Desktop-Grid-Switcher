@@ -516,24 +516,52 @@ namespace VirtualDesktopGridSwitcher {
             
             hotkeys = new List<Hotkey>();
 
-            RegisterSwitchHotkey(Keys.Left, delegate { this.Switch(Left); });
-            RegisterSwitchHotkey(Keys.Right, delegate { this.Switch(Right); });
-            RegisterSwitchHotkey(Keys.Up, delegate { this.Switch(Up); });
-            RegisterSwitchHotkey(Keys.Down, delegate { this.Switch(Down); });
+            if (settings.Set1Enabled) {
+                RegisterSwitchHotkey(settings.LeftKey1, delegate { this.Switch(Left); });
+                RegisterSwitchHotkey(settings.RightKey1, delegate { this.Switch(Right); });
+                RegisterSwitchHotkey(settings.UpKey1, delegate { this.Switch(Up); });
+                RegisterSwitchHotkey(settings.DownKey1, delegate { this.Switch(Down); });
 
-            RegisterMoveHotkey(Keys.Left, delegate { Move(Left); });
-            RegisterMoveHotkey(Keys.Right, delegate { Move(Right); });
-            RegisterMoveHotkey(Keys.Up, delegate { Move(Up); });
-            RegisterMoveHotkey(Keys.Down, delegate { Move(Down); });
+                RegisterMoveHotkey(settings.LeftKey1, delegate { Move(Left); });
+                RegisterMoveHotkey(settings.RightKey1, delegate { Move(Right); });
+                RegisterMoveHotkey(settings.UpKey1, delegate { Move(Up); });
+                RegisterMoveHotkey(settings.DownKey1, delegate { Move(Down); });
+            }
 
-            for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, settings.FKeysForNumbers ?  12 : 9) ; ++keyNumber) {
-                var desktopIndex = keyNumber - 1;
-                Keys keycode =
-                    (Keys)Enum.Parse(typeof(Keys), (settings.FKeysForNumbers ? "F" : "D") + keyNumber.ToString());
-                
-                RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
+            if (settings.Set2Enabled) {
+                RegisterSwitchHotkey(settings.LeftKey2, delegate { this.Switch(Left); });
+                RegisterSwitchHotkey(settings.RightKey2, delegate { this.Switch(Right); });
+                RegisterSwitchHotkey(settings.UpKey2, delegate { this.Switch(Up); });
+                RegisterSwitchHotkey(settings.DownKey2, delegate { this.Switch(Down); });
 
-                RegisterMoveHotkey(keycode, delegate { this.Move(desktopIndex); });
+                RegisterMoveHotkey(settings.LeftKey2, delegate { Move(Left); });
+                RegisterMoveHotkey(settings.RightKey2, delegate { Move(Right); });
+                RegisterMoveHotkey(settings.UpKey2, delegate { Move(Up); });
+                RegisterMoveHotkey(settings.DownKey2, delegate { Move(Down); });
+            }
+
+            if (settings.NumbersEnabled) {
+                for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, 9); ++keyNumber) {
+                    var desktopIndex = keyNumber - 1;
+                    Keys keycode =
+                    (Keys)Enum.Parse(typeof(Keys), "D" + keyNumber.ToString());
+
+                    RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
+
+                    RegisterMoveHotkey(keycode, delegate { this.Move(desktopIndex); });
+                }
+            }
+
+            if (settings.FKeysEnabled) {
+                for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, 12); ++keyNumber) {
+                    var desktopIndex = keyNumber - 1;
+                    Keys keycode =
+                    (Keys)Enum.Parse(typeof(Keys), "F" + keyNumber.ToString());
+
+                    RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
+
+                    RegisterMoveHotkey(keycode, delegate { this.Move(desktopIndex); });
+                }
             }
 
             RegisterToggleStickyHotKey();
