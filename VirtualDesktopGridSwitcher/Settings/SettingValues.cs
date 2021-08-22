@@ -87,7 +87,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
         public List<BrowserInfo> BrowserInfoList = new List<BrowserInfo>();
 
-        public int MoveOnNewWindowDetectTimeoutMs = 5000;
+        public int MoveOnNewWindowDetectTimeoutMs = 3000;
 
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
@@ -161,7 +161,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
             if (SettingsVersion == 1) {
                 if (MoveOnNewWindowDetectTimeoutMs == 1200) {
-                    MoveOnNewWindowDetectTimeoutMs = 5000;
+                    MoveOnNewWindowDetectTimeoutMs = 3000;
                 }
                 NumbersEnabled = !FKeysEnabled;
                 SettingsVersion = 2;
