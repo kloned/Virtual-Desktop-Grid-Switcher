@@ -8,22 +8,37 @@ namespace VirtualDesktopGridSwitcher.Settings {
     public partial class SettingsDialog : Form {
 
         private SettingValues settings;
+        private ComboBox[] desktopCombos; 
 
         public SettingsDialog(SettingValues settings) {
 
             this.settings = settings;
+            this.desktopCombos = 
+                new ComboBox[] {
+                    comboBox1,
+                    comboBox2,
+                    comboBox3,
+                    comboBox4,
+                    comboBox5,
+                    comboBox6,
+                    comboBox7,
+                    comboBox8,
+                    comboBox9,
+                    comboBox10,
+                    comboBox11,
+                    comboBox12
+                };
 
             InitializeComponent();
 
-            PopulateComboBoxKeyValues(comboBoxLeft1);
-            PopulateComboBoxKeyValues(comboBoxRight1);
-            PopulateComboBoxKeyValues(comboBoxUp1);
-            PopulateComboBoxKeyValues(comboBoxDown1);
+            PopulateComboBoxKeyValues(comboBoxLeft);
+            PopulateComboBoxKeyValues(comboBoxRight);
+            PopulateComboBoxKeyValues(comboBoxUp);
+            PopulateComboBoxKeyValues(comboBoxDown);
 
-            PopulateComboBoxKeyValues(comboBoxLeft2);
-            PopulateComboBoxKeyValues(comboBoxRight2);
-            PopulateComboBoxKeyValues(comboBoxUp2);
-            PopulateComboBoxKeyValues(comboBoxDown2);
+            foreach (ComboBox desktopCombo in desktopCombos) {
+                PopulateComboBoxKeyValues(desktopCombo);
+            }
 
             PopulateComboBoxKeyValues(comboBoxKeySticky);
             PopulateComboBoxKeyValues(comboBoxAlwaysOnTopKey);
@@ -54,42 +69,40 @@ namespace VirtualDesktopGridSwitcher.Settings {
             checkBoxWinModifierSwitch.Checked = settings.SwitchModifiers.Win;
             checkBoxAltModifierSwitch.Checked = settings.SwitchModifiers.Alt;
             checkBoxShiftModifierSwitch.Checked = settings.SwitchModifiers.Shift;
-	        checkBoxEnabledSwitch.Checked = settings.SwitchEnabled;
+            checkBoxEnabledSwitch.Checked = settings.SwitchEnabled;
 
             checkBoxCtrlModifierMove.Checked = settings.MoveModifiers.Ctrl;
             checkBoxWinModifierMove.Checked = settings.MoveModifiers.Win;
             checkBoxAltModifierMove.Checked = settings.MoveModifiers.Alt;
             checkBoxShiftModifierMove.Checked = settings.MoveModifiers.Shift;
-			checkBoxEnabledMove.Checked = settings.MoveEnabled;
+            checkBoxEnabledMove.Checked = settings.MoveEnabled;
 
-			checkBoxFKeys.Checked = settings.FKeysEnabled;
+            checkBoxDirectionKeys.Checked = settings.DirectionKeysEnabled;
+            SetComboBoxForKey(comboBoxLeft, settings.LeftKey);
+            SetComboBoxForKey(comboBoxRight, settings.RightKey);
+            SetComboBoxForKey(comboBoxUp, settings.UpKey);
+            SetComboBoxForKey(comboBoxDown, settings.DownKey);
+
+            checkBoxFKeys.Checked = settings.FKeysEnabled;
             checkBoxNumbers.Checked = settings.NumbersEnabled;
 
-            checkBoxSet1.Checked = settings.Set1Enabled;
-            comboBoxLeft1.SelectedItem = settings.LeftKey1;
-            comboBoxRight1.SelectedItem = settings.RightKey1;
-            comboBoxUp1.SelectedItem = settings.UpKey1;
-            comboBoxDown1.SelectedItem = settings.DownKey1;
-
-            checkBoxSet2.Checked = settings.Set2Enabled;
-            comboBoxLeft2.SelectedItem = settings.LeftKey2;
-            comboBoxRight2.SelectedItem = settings.RightKey2;
-            comboBoxUp2.SelectedItem = settings.UpKey2;
-            comboBoxDown2.SelectedItem = settings.DownKey2;
+            for (int i = 0; i < desktopCombos.Length; ++i) {
+                SetComboBoxForKey(desktopCombos[i], settings.DesktopKeys[i]);
+            }
 
             checkBoxCtrlModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Ctrl;
             checkBoxWinModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Win;
             checkBoxAltModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Alt;
             checkBoxShiftModifierSticky.Checked = settings.StickyWindowHotKey.Modifiers.Shift;
-            comboBoxKeySticky.SelectedItem = settings.StickyWindowHotKey.Key;
-	        checkBoxEnabledSticky.Checked = settings.StickyWindowEnabled;
+            SetComboBoxForKey(comboBoxKeySticky, settings.StickyWindowHotKey.Key);
+            checkBoxEnabledSticky.Checked = settings.StickyWindowEnabled;
 
             checkBoxCtrlModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Ctrl;
             checkBoxWinModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Win;
             checkBoxAltModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Alt;
             checkBoxShiftModifierAlwaysOnTop.Checked = settings.AlwaysOnTopHotkey.Modifiers.Shift;
-            comboBoxAlwaysOnTopKey.SelectedItem = settings.AlwaysOnTopHotkey.Key;
-	        checkBoxEnabledAlwaysOnTop.Checked = settings.AlwaysOnTopEnabled;
+            SetComboBoxForKey(comboBoxAlwaysOnTopKey, settings.AlwaysOnTopHotkey.Key);
+            checkBoxEnabledAlwaysOnTop.Checked = settings.AlwaysOnTopEnabled;
         }
 
         private bool SaveValues() {
@@ -98,9 +111,9 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 var cols = int.Parse(textBoxColumns.Text);
 
                 if (rows * cols > 20) {
-                    var result = 
+                    var result =
                         MessageBox.Show(this,
-                                        (rows * cols) + " desktops is not recommended for windows performance. Continue?", 
+                                        (rows * cols) + " desktops is not recommended for windows performance. Continue?",
                                         "Warning",
                                         MessageBoxButtons.YesNo,
                                         MessageBoxIcon.Warning);
@@ -128,42 +141,40 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.SwitchModifiers.Win = checkBoxWinModifierSwitch.Checked;
             settings.SwitchModifiers.Alt = checkBoxAltModifierSwitch.Checked;
             settings.SwitchModifiers.Shift = checkBoxShiftModifierSwitch.Checked;
-	        settings.SwitchEnabled = checkBoxEnabledSwitch.Checked;
+            settings.SwitchEnabled = checkBoxEnabledSwitch.Checked;
 
             settings.MoveModifiers.Ctrl = checkBoxCtrlModifierMove.Checked;
             settings.MoveModifiers.Win = checkBoxWinModifierMove.Checked;
             settings.MoveModifiers.Alt = checkBoxAltModifierMove.Checked;
             settings.MoveModifiers.Shift = checkBoxShiftModifierMove.Checked;
-	        settings.MoveEnabled = checkBoxEnabledMove.Checked;
+            settings.MoveEnabled = checkBoxEnabledMove.Checked;
+
+            settings.DirectionKeysEnabled = checkBoxDirectionKeys.Checked;
+            settings.LeftKey = GetKeyFromComboBox(comboBoxLeft);
+            settings.RightKey = GetKeyFromComboBox(comboBoxRight);
+            settings.UpKey = GetKeyFromComboBox(comboBoxUp);
+            settings.DownKey = GetKeyFromComboBox(comboBoxDown);
 
             settings.FKeysEnabled = checkBoxFKeys.Checked;
             settings.NumbersEnabled = checkBoxNumbers.Checked;
 
-            settings.Set1Enabled = checkBoxSet1.Checked;
-            settings.LeftKey1 = (Keys)comboBoxLeft1.SelectedItem;
-            settings.RightKey1 = (Keys)comboBoxRight1.SelectedItem;
-            settings.UpKey1 = (Keys)comboBoxUp1.SelectedItem;
-            settings.DownKey1 = (Keys)comboBoxDown1.SelectedItem;
-
-            settings.Set2Enabled = checkBoxSet2.Checked;
-            settings.LeftKey2 = (Keys)comboBoxLeft2.SelectedItem;
-            settings.RightKey2 = (Keys)comboBoxRight2.SelectedItem;
-            settings.UpKey2 = (Keys)comboBoxUp2.SelectedItem;
-            settings.DownKey2 = (Keys)comboBoxDown2.SelectedItem;
+            for (int i = 0; i < desktopCombos.Length; ++i) {
+                settings.DesktopKeys[i] = GetKeyFromComboBox(desktopCombos[i]);
+            }
 
             settings.StickyWindowHotKey.Modifiers.Ctrl = checkBoxCtrlModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Win = checkBoxWinModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Alt = checkBoxAltModifierSticky.Checked;
             settings.StickyWindowHotKey.Modifiers.Shift = checkBoxShiftModifierSticky.Checked;
-            settings.StickyWindowHotKey.Key = (Keys)comboBoxKeySticky.SelectedItem;
-	        settings.StickyWindowEnabled = checkBoxEnabledSticky.Checked;
+            settings.StickyWindowHotKey.Key = GetKeyFromComboBox(comboBoxKeySticky);
+            settings.StickyWindowEnabled = checkBoxEnabledSticky.Checked;
 
             settings.AlwaysOnTopHotkey.Modifiers.Ctrl = checkBoxCtrlModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Win = checkBoxWinModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Alt = checkBoxAltModifierAlwaysOnTop.Checked;
             settings.AlwaysOnTopHotkey.Modifiers.Shift = checkBoxShiftModifierAlwaysOnTop.Checked;
-            settings.AlwaysOnTopHotkey.Key = (Keys)comboBoxAlwaysOnTopKey.SelectedItem;
-	        settings.AlwaysOnTopEnabled = checkBoxEnabledAlwaysOnTop.Checked;
+            settings.AlwaysOnTopHotkey.Key = GetKeyFromComboBox(comboBoxAlwaysOnTopKey);
+            settings.AlwaysOnTopEnabled = checkBoxEnabledAlwaysOnTop.Checked;
 
             if (!settings.ApplySettings()) {
                 MessageBox.Show(this, "Failed to apply settings", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -178,19 +189,29 @@ namespace VirtualDesktopGridSwitcher.Settings {
             return true;
         }
 
+        private static void SetComboBoxForKey(ComboBox comboBox, Keys key) {
+            comboBox.SelectedItem = key == Keys.None ? (object)null : key;
+        }
+
+        private static Keys GetKeyFromComboBox(ComboBox comboBox) {
+            return (Keys?)comboBox.SelectedItem ?? Keys.None;
+        }
+
         private void buttonOK_Click(object sender, EventArgs e) {
             SaveValues();
         }
 
         private void comboBoxKey_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode != Keys.ControlKey &&
+            if (e.KeyCode == Keys.Delete && ((ComboBox)sender).SelectedItem != null) {
+                ((ComboBox)sender).SelectedItem = null;
+            } else if (e.KeyCode != Keys.ControlKey &&
                 e.KeyCode != Keys.Menu &&
                 e.KeyCode != Keys.ShiftKey &&
                 e.KeyCode != Keys.LWin &&
                 e.KeyCode != Keys.RWin) {
                 ((ComboBox)sender).SelectedItem = e.KeyCode;
-                e.Handled = true;
             }
+            e.Handled = true;
         }
 
         private void comboBoxKey_KeyPress(object sender, KeyPressEventArgs e) {

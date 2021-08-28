@@ -48,20 +48,31 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
 		public bool MoveEnabled = true;
 
+        public bool DirectionKeysEnabled = true;
+        public Keys LeftKey = Keys.Left;
+        public Keys RightKey = Keys.Right;
+        public Keys UpKey = Keys.Up;
+        public Keys DownKey = Keys.Down;
+
         public bool NumbersEnabled = true;
         public bool FKeysEnabled = false;
 
-        public bool Set1Enabled = true;
-        public Keys LeftKey1 = Keys.Left;
-        public Keys RightKey1 = Keys.Right;
-        public Keys UpKey1 = Keys.Up;
-        public Keys DownKey1 = Keys.Down;
-
-        public bool Set2Enabled = false;
-        public Keys LeftKey2 = Keys.H;
-        public Keys RightKey2 = Keys.L;
-        public Keys UpKey2 = Keys.J;
-        public Keys DownKey2 = Keys.K;
+        [XmlArrayItem(ElementName = "Key")]
+        public List<Keys> DesktopKeys = 
+            new List<Keys> { 
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None,
+                Keys.None
+            };
 
         public Hotkey AlwaysOnTopHotkey =
             new Hotkey {

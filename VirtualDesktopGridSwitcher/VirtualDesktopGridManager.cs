@@ -516,28 +516,16 @@ namespace VirtualDesktopGridSwitcher {
             
             hotkeys = new List<Hotkey>();
 
-            if (settings.Set1Enabled) {
-                RegisterSwitchHotkey(settings.LeftKey1, delegate { this.Switch(Left); });
-                RegisterSwitchHotkey(settings.RightKey1, delegate { this.Switch(Right); });
-                RegisterSwitchHotkey(settings.UpKey1, delegate { this.Switch(Up); });
-                RegisterSwitchHotkey(settings.DownKey1, delegate { this.Switch(Down); });
+            if (settings.DirectionKeysEnabled) {
+                RegisterSwitchHotkey(settings.LeftKey, delegate { this.Switch(Left); });
+                RegisterSwitchHotkey(settings.RightKey, delegate { this.Switch(Right); });
+                RegisterSwitchHotkey(settings.UpKey, delegate { this.Switch(Up); });
+                RegisterSwitchHotkey(settings.DownKey, delegate { this.Switch(Down); });
 
-                RegisterMoveHotkey(settings.LeftKey1, delegate { Move(Left); });
-                RegisterMoveHotkey(settings.RightKey1, delegate { Move(Right); });
-                RegisterMoveHotkey(settings.UpKey1, delegate { Move(Up); });
-                RegisterMoveHotkey(settings.DownKey1, delegate { Move(Down); });
-            }
-
-            if (settings.Set2Enabled) {
-                RegisterSwitchHotkey(settings.LeftKey2, delegate { this.Switch(Left); });
-                RegisterSwitchHotkey(settings.RightKey2, delegate { this.Switch(Right); });
-                RegisterSwitchHotkey(settings.UpKey2, delegate { this.Switch(Up); });
-                RegisterSwitchHotkey(settings.DownKey2, delegate { this.Switch(Down); });
-
-                RegisterMoveHotkey(settings.LeftKey2, delegate { Move(Left); });
-                RegisterMoveHotkey(settings.RightKey2, delegate { Move(Right); });
-                RegisterMoveHotkey(settings.UpKey2, delegate { Move(Up); });
-                RegisterMoveHotkey(settings.DownKey2, delegate { Move(Down); });
+                RegisterMoveHotkey(settings.LeftKey, delegate { Move(Left); });
+                RegisterMoveHotkey(settings.RightKey, delegate { Move(Right); });
+                RegisterMoveHotkey(settings.UpKey, delegate { Move(Up); });
+                RegisterMoveHotkey(settings.DownKey, delegate { Move(Down); });
             }
 
             if (settings.NumbersEnabled) {
@@ -564,18 +552,26 @@ namespace VirtualDesktopGridSwitcher {
                 }
             }
 
+            for (int i = 0; i < settings.DesktopKeys.Count; ++i) {
+                RegisterSwitchHotkey(settings.DesktopKeys[i], delegate { this.Switch(i); });
+                RegisterMoveHotkey(settings.DesktopKeys[i], delegate { this.Move(i); });
+            }
+
             RegisterToggleStickyHotKey();
             RegisterToggleAlwaysOnTopHotKey();
         }
 
-        private void RegisterSwitchHotkey(Keys keycode, Action action) {
-			if(!settings.SwitchEnabled) return;
+        private void RegisterSwitchHotkey(Keys keyCode, Action action) {
+
+			if(!settings.SwitchEnabled || keyCode == Keys.None) 
+                return;
+
             Hotkey hk = new Hotkey() {
                 Control = settings.SwitchModifiers.Ctrl,
                 Windows = settings.SwitchModifiers.Win,
                 Alt = settings.SwitchModifiers.Alt,
                 Shift = settings.SwitchModifiers.Shift,
-                KeyCode = keycode
+                KeyCode = keyCode
             };
             hk.Pressed += delegate { action(); };
             if (hk.Register(null)) {
@@ -588,16 +584,18 @@ namespace VirtualDesktopGridSwitcher {
             }
         }
 
-        private void RegisterMoveHotkey(Keys keycode, Action action)
+        private void RegisterMoveHotkey(Keys keyCode, Action action)
         {
-			if (!settings.MoveEnabled) return;
+			if (!settings.MoveEnabled || keyCode == Keys.None) 
+                return;
+
 			Hotkey hk = new Hotkey()
             {
                 Control = settings.MoveModifiers.Ctrl,
                 Windows = settings.MoveModifiers.Win,
                 Alt = settings.MoveModifiers.Alt,
                 Shift = settings.MoveModifiers.Shift,
-                KeyCode = keycode
+                KeyCode = keyCode
             };
             hk.Pressed += delegate { action(); };
             if (hk.Register(null))
@@ -614,7 +612,10 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void RegisterToggleStickyHotKey() {
-			if(!settings.StickyWindowEnabled) return;
+			
+            if(!settings.StickyWindowEnabled || settings.StickyWindowHotKey.Key == Keys.None) 
+                return;
+
             Hotkey hk = new Hotkey() {
                 Control = settings.StickyWindowHotKey.Modifiers.Ctrl,
                 Windows = settings.StickyWindowHotKey.Modifiers.Win,
@@ -634,7 +635,10 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void RegisterToggleAlwaysOnTopHotKey() {
-			if(!this.settings.AlwaysOnTopEnabled) return;
+
+			if(!this.settings.AlwaysOnTopEnabled || settings.AlwaysOnTopHotkey.Key == Keys.None) 
+                return;
+
             Hotkey hk = new Hotkey() {
                 Control = settings.AlwaysOnTopHotkey.Modifiers.Ctrl,
                 Windows = settings.AlwaysOnTopHotkey.Modifiers.Win,
