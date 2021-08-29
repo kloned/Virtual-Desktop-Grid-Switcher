@@ -58,21 +58,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
         public bool FKeysEnabled = false;
 
         [XmlArrayItem(ElementName = "Key")]
-        public List<Keys> DesktopKeys = 
-            new List<Keys> { 
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None,
-                Keys.None
-            };
+        public List<Keys> DesktopKeys = new List<Keys>();
 
         public Hotkey AlwaysOnTopHotkey =
             new Hotkey {
@@ -133,6 +119,23 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
             if (MoveOnNewWindowExeNames.Count == 0) {
                 MoveOnNewWindowExeNames = new List<string>() { "WINWORD.EXE", "EXCEL.EXE", "AcroRd32.exe" };
+            }
+
+            if (DesktopKeys.Count == 0) {
+                DesktopKeys = new List<Keys> {
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None,
+                    Keys.None
+                };
             }
         }
 

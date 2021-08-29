@@ -532,7 +532,7 @@ namespace VirtualDesktopGridSwitcher {
                 for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, 9); ++keyNumber) {
                     var desktopIndex = keyNumber - 1;
                     Keys keycode =
-                    (Keys)Enum.Parse(typeof(Keys), "D" + keyNumber.ToString());
+                        (Keys)Enum.Parse(typeof(Keys), "D" + keyNumber.ToString());
 
                     RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
 
@@ -544,7 +544,7 @@ namespace VirtualDesktopGridSwitcher {
                 for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, 12); ++keyNumber) {
                     var desktopIndex = keyNumber - 1;
                     Keys keycode =
-                    (Keys)Enum.Parse(typeof(Keys), "F" + keyNumber.ToString());
+                        (Keys)Enum.Parse(typeof(Keys), "F" + keyNumber.ToString());
 
                     RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
 
@@ -553,8 +553,9 @@ namespace VirtualDesktopGridSwitcher {
             }
 
             for (int i = 0; i < settings.DesktopKeys.Count; ++i) {
-                RegisterSwitchHotkey(settings.DesktopKeys[i], delegate { this.Switch(i); });
-                RegisterMoveHotkey(settings.DesktopKeys[i], delegate { this.Move(i); });
+                var desktopIndex = i;
+                RegisterSwitchHotkey(settings.DesktopKeys[i], delegate { this.Switch(desktopIndex); });
+                RegisterMoveHotkey(settings.DesktopKeys[i], delegate { this.Move(desktopIndex); });
             }
 
             RegisterToggleStickyHotKey();

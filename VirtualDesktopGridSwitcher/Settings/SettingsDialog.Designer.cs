@@ -80,8 +80,11 @@
             this.comboBox12 = new System.Windows.Forms.ComboBox();
             this.comboBox11 = new System.Windows.Forms.ComboBox();
             this.comboBox10 = new System.Windows.Forms.ComboBox();
+            this.labelDonate = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBoxDonate = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDonate)).BeginInit();
             this.SuspendLayout();
             // 
             // labelRows
@@ -210,7 +213,7 @@
             this.buttonApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonApply.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonApply.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.buttonApply.Location = new System.Drawing.Point(420, 399);
+            this.buttonApply.Location = new System.Drawing.Point(420, 402);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(90, 30);
             this.buttonApply.TabIndex = 45;
@@ -223,7 +226,7 @@
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.buttonCancel.Location = new System.Drawing.Point(518, 399);
+            this.buttonCancel.Location = new System.Drawing.Point(518, 402);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(90, 30);
             this.buttonCancel.TabIndex = 46;
@@ -298,7 +301,7 @@
             // 
             this.checkBoxWinModifierSticky.AutoSize = true;
             this.checkBoxWinModifierSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxWinModifierSticky.Location = new System.Drawing.Point(222, 365);
+            this.checkBoxWinModifierSticky.Location = new System.Drawing.Point(222, 360);
             this.checkBoxWinModifierSticky.Name = "checkBoxWinModifierSticky";
             this.checkBoxWinModifierSticky.Size = new System.Drawing.Size(51, 20);
             this.checkBoxWinModifierSticky.TabIndex = 41;
@@ -311,7 +314,7 @@
             // 
             this.checkBoxAltModifierSticky.AutoSize = true;
             this.checkBoxAltModifierSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxAltModifierSticky.Location = new System.Drawing.Point(271, 365);
+            this.checkBoxAltModifierSticky.Location = new System.Drawing.Point(271, 360);
             this.checkBoxAltModifierSticky.Name = "checkBoxAltModifierSticky";
             this.checkBoxAltModifierSticky.Size = new System.Drawing.Size(45, 20);
             this.checkBoxAltModifierSticky.TabIndex = 42;
@@ -324,7 +327,7 @@
             // 
             this.checkBoxShiftModifierSticky.AutoSize = true;
             this.checkBoxShiftModifierSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxShiftModifierSticky.Location = new System.Drawing.Point(318, 365);
+            this.checkBoxShiftModifierSticky.Location = new System.Drawing.Point(318, 360);
             this.checkBoxShiftModifierSticky.Name = "checkBoxShiftModifierSticky";
             this.checkBoxShiftModifierSticky.Size = new System.Drawing.Size(58, 20);
             this.checkBoxShiftModifierSticky.TabIndex = 43;
@@ -337,7 +340,7 @@
             // 
             this.checkBoxCtrlModifierSticky.AutoSize = true;
             this.checkBoxCtrlModifierSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxCtrlModifierSticky.Location = new System.Drawing.Point(172, 365);
+            this.checkBoxCtrlModifierSticky.Location = new System.Drawing.Point(172, 360);
             this.checkBoxCtrlModifierSticky.Name = "checkBoxCtrlModifierSticky";
             this.checkBoxCtrlModifierSticky.Size = new System.Drawing.Size(50, 20);
             this.checkBoxCtrlModifierSticky.TabIndex = 40;
@@ -350,7 +353,7 @@
             // 
             this.labelToggleSticky.AutoSize = true;
             this.labelToggleSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.labelToggleSticky.Location = new System.Drawing.Point(12, 365);
+            this.labelToggleSticky.Location = new System.Drawing.Point(12, 360);
             this.labelToggleSticky.Name = "labelToggleSticky";
             this.labelToggleSticky.Size = new System.Drawing.Size(159, 16);
             this.labelToggleSticky.TabIndex = 38;
@@ -362,7 +365,7 @@
             // 
             this.checkBoxWinModifierAlwaysOnTop.AutoSize = true;
             this.checkBoxWinModifierAlwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxWinModifierAlwaysOnTop.Location = new System.Drawing.Point(222, 314);
+            this.checkBoxWinModifierAlwaysOnTop.Location = new System.Drawing.Point(222, 309);
             this.checkBoxWinModifierAlwaysOnTop.Name = "checkBoxWinModifierAlwaysOnTop";
             this.checkBoxWinModifierAlwaysOnTop.Size = new System.Drawing.Size(51, 20);
             this.checkBoxWinModifierAlwaysOnTop.TabIndex = 34;
@@ -375,7 +378,7 @@
             // 
             this.checkBoxAltModifierAlwaysOnTop.AutoSize = true;
             this.checkBoxAltModifierAlwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxAltModifierAlwaysOnTop.Location = new System.Drawing.Point(271, 314);
+            this.checkBoxAltModifierAlwaysOnTop.Location = new System.Drawing.Point(271, 309);
             this.checkBoxAltModifierAlwaysOnTop.Name = "checkBoxAltModifierAlwaysOnTop";
             this.checkBoxAltModifierAlwaysOnTop.Size = new System.Drawing.Size(45, 20);
             this.checkBoxAltModifierAlwaysOnTop.TabIndex = 35;
@@ -388,7 +391,7 @@
             // 
             this.checkBoxShiftModifierAlwaysOnTop.AutoSize = true;
             this.checkBoxShiftModifierAlwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxShiftModifierAlwaysOnTop.Location = new System.Drawing.Point(318, 314);
+            this.checkBoxShiftModifierAlwaysOnTop.Location = new System.Drawing.Point(318, 309);
             this.checkBoxShiftModifierAlwaysOnTop.Name = "checkBoxShiftModifierAlwaysOnTop";
             this.checkBoxShiftModifierAlwaysOnTop.Size = new System.Drawing.Size(58, 20);
             this.checkBoxShiftModifierAlwaysOnTop.TabIndex = 36;
@@ -401,7 +404,7 @@
             // 
             this.checkBoxCtrlModifierAlwaysOnTop.AutoSize = true;
             this.checkBoxCtrlModifierAlwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxCtrlModifierAlwaysOnTop.Location = new System.Drawing.Point(172, 314);
+            this.checkBoxCtrlModifierAlwaysOnTop.Location = new System.Drawing.Point(172, 309);
             this.checkBoxCtrlModifierAlwaysOnTop.Name = "checkBoxCtrlModifierAlwaysOnTop";
             this.checkBoxCtrlModifierAlwaysOnTop.Size = new System.Drawing.Size(50, 20);
             this.checkBoxCtrlModifierAlwaysOnTop.TabIndex = 33;
@@ -414,7 +417,7 @@
             // 
             this.labelToggleAkwaysOnTop.AutoSize = true;
             this.labelToggleAkwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.labelToggleAkwaysOnTop.Location = new System.Drawing.Point(12, 315);
+            this.labelToggleAkwaysOnTop.Location = new System.Drawing.Point(12, 310);
             this.labelToggleAkwaysOnTop.Name = "labelToggleAkwaysOnTop";
             this.labelToggleAkwaysOnTop.Size = new System.Drawing.Size(160, 16);
             this.labelToggleAkwaysOnTop.TabIndex = 31;
@@ -426,7 +429,7 @@
             // 
             this.checkBoxEnabledAlwaysOnTop.AutoSize = true;
             this.checkBoxEnabledAlwaysOnTop.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxEnabledAlwaysOnTop.Location = new System.Drawing.Point(16, 334);
+            this.checkBoxEnabledAlwaysOnTop.Location = new System.Drawing.Point(16, 329);
             this.checkBoxEnabledAlwaysOnTop.Name = "checkBoxEnabledAlwaysOnTop";
             this.checkBoxEnabledAlwaysOnTop.Size = new System.Drawing.Size(70, 20);
             this.checkBoxEnabledAlwaysOnTop.TabIndex = 32;
@@ -438,7 +441,7 @@
             // 
             this.checkBoxEnabledSticky.AutoSize = true;
             this.checkBoxEnabledSticky.Font = new System.Drawing.Font("Verdana", 9.75F);
-            this.checkBoxEnabledSticky.Location = new System.Drawing.Point(16, 384);
+            this.checkBoxEnabledSticky.Location = new System.Drawing.Point(16, 379);
             this.checkBoxEnabledSticky.Name = "checkBoxEnabledSticky";
             this.checkBoxEnabledSticky.Size = new System.Drawing.Size(70, 20);
             this.checkBoxEnabledSticky.TabIndex = 39;
@@ -485,7 +488,7 @@
             this.comboBoxKeySticky.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.comboBoxKeySticky.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.comboBoxKeySticky.FormattingEnabled = true;
-            this.comboBoxKeySticky.Location = new System.Drawing.Point(385, 362);
+            this.comboBoxKeySticky.Location = new System.Drawing.Point(385, 357);
             this.comboBoxKeySticky.Name = "comboBoxKeySticky";
             this.comboBoxKeySticky.Size = new System.Drawing.Size(70, 24);
             this.comboBoxKeySticky.TabIndex = 44;
@@ -498,7 +501,7 @@
             this.comboBoxAlwaysOnTopKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.comboBoxAlwaysOnTopKey.Font = new System.Drawing.Font("Verdana", 9.75F);
             this.comboBoxAlwaysOnTopKey.FormattingEnabled = true;
-            this.comboBoxAlwaysOnTopKey.Location = new System.Drawing.Point(385, 312);
+            this.comboBoxAlwaysOnTopKey.Location = new System.Drawing.Point(385, 307);
             this.comboBoxAlwaysOnTopKey.Name = "comboBoxAlwaysOnTopKey";
             this.comboBoxAlwaysOnTopKey.Size = new System.Drawing.Size(70, 24);
             this.comboBoxAlwaysOnTopKey.TabIndex = 37;
@@ -607,6 +610,8 @@
             this.comboBox1.Size = new System.Drawing.Size(70, 24);
             this.comboBox1.TabIndex = 48;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox1, "Just press the key you want. Delete will clear a value.");
+            this.comboBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox2
             // 
@@ -618,6 +623,8 @@
             this.comboBox2.Size = new System.Drawing.Size(70, 24);
             this.comboBox2.TabIndex = 49;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox2, "Just press the key you want. Delete will clear a value.");
+            this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox3
             // 
@@ -629,6 +636,8 @@
             this.comboBox3.Size = new System.Drawing.Size(70, 24);
             this.comboBox3.TabIndex = 50;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox3, "Just press the key you want. Delete will clear a value.");
+            this.comboBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox6
             // 
@@ -640,6 +649,8 @@
             this.comboBox6.Size = new System.Drawing.Size(70, 24);
             this.comboBox6.TabIndex = 53;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox6, "Just press the key you want. Delete will clear a value.");
+            this.comboBox6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox5
             // 
@@ -651,6 +662,8 @@
             this.comboBox5.Size = new System.Drawing.Size(70, 24);
             this.comboBox5.TabIndex = 52;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox5, "Just press the key you want. Delete will clear a value.");
+            this.comboBox5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox4
             // 
@@ -662,6 +675,8 @@
             this.comboBox4.Size = new System.Drawing.Size(70, 24);
             this.comboBox4.TabIndex = 51;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox4, "Just press the key you want. Delete will clear a value.");
+            this.comboBox4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox9
             // 
@@ -673,6 +688,8 @@
             this.comboBox9.Size = new System.Drawing.Size(70, 24);
             this.comboBox9.TabIndex = 56;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox9, "Just press the key you want. Delete will clear a value.");
+            this.comboBox9.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox8
             // 
@@ -684,6 +701,8 @@
             this.comboBox8.Size = new System.Drawing.Size(70, 24);
             this.comboBox8.TabIndex = 55;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox8, "Just press the key you want. Delete will clear a value.");
+            this.comboBox8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox7
             // 
@@ -695,6 +714,8 @@
             this.comboBox7.Size = new System.Drawing.Size(70, 24);
             this.comboBox7.TabIndex = 54;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox7, "Just press the key you want. Delete will clear a value.");
+            this.comboBox7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox12
             // 
@@ -706,6 +727,8 @@
             this.comboBox12.Size = new System.Drawing.Size(70, 24);
             this.comboBox12.TabIndex = 59;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox12, "Just press the key you want. Delete will clear a value.");
+            this.comboBox12.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox12.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox11
             // 
@@ -717,6 +740,8 @@
             this.comboBox11.Size = new System.Drawing.Size(70, 24);
             this.comboBox11.TabIndex = 58;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox11, "Just press the key you want. Delete will clear a value.");
+            this.comboBox11.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox11.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
             // 
             // comboBox10
             // 
@@ -728,6 +753,20 @@
             this.comboBox10.Size = new System.Drawing.Size(70, 24);
             this.comboBox10.TabIndex = 57;
             this.toolTipSettingsDialog.SetToolTip(this.comboBox10, "Just press the key you want. Delete will clear a value.");
+            this.comboBox10.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBoxKey_KeyDown);
+            this.comboBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKey_KeyPress);
+            // 
+            // labelDonate
+            // 
+            this.labelDonate.AutoSize = true;
+            this.labelDonate.Font = new System.Drawing.Font("Verdana", 9.75F);
+            this.labelDonate.Location = new System.Drawing.Point(13, 409);
+            this.labelDonate.Name = "labelDonate";
+            this.labelDonate.Size = new System.Drawing.Size(299, 16);
+            this.labelDonate.TabIndex = 62;
+            this.labelDonate.Text = "If you would like to show appreciation, click";
+            this.toolTipSettingsDialog.SetToolTip(this.labelDonate, "Key modifier combination to use with arrow keys to move a window to another deskt" +
+        "op");
             // 
             // groupBox1
             // 
@@ -751,11 +790,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Desktops 1 to 12";
             // 
+            // pictureBoxDonate
+            // 
+            this.pictureBoxDonate.Image = global::VirtualDesktopGridSwitcher.Properties.Resources.Donate;
+            this.pictureBoxDonate.Location = new System.Drawing.Point(313, 407);
+            this.pictureBoxDonate.Name = "pictureBoxDonate";
+            this.pictureBoxDonate.Size = new System.Drawing.Size(74, 21);
+            this.pictureBoxDonate.TabIndex = 61;
+            this.pictureBoxDonate.TabStop = false;
+            this.pictureBoxDonate.Click += new System.EventHandler(this.pictureBoxDonate_Click);
+            // 
             // SettingsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 441);
+            this.Controls.Add(this.pictureBoxDonate);
             this.Controls.Add(this.textBoxColumns);
             this.Controls.Add(this.textBoxRows);
             this.Controls.Add(this.comboBoxDown);
@@ -799,10 +849,13 @@
             this.Controls.Add(this.checkBoxDirectionKeys);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBoxShiftModifierMove);
+            this.Controls.Add(this.labelDonate);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsDialog";
             this.Text = "Virtual Desktop Grid Switcher Settings";
+            this.toolTipSettingsDialog.SetToolTip(this, "Click to support development via PayPal");
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDonate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -866,5 +919,7 @@
         private System.Windows.Forms.ComboBox comboBox11;
         private System.Windows.Forms.ComboBox comboBox10;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox pictureBoxDonate;
+        private System.Windows.Forms.Label labelDonate;
     }
 }

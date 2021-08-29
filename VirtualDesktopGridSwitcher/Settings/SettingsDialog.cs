@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Configuration;
 using System.Windows.Forms;
@@ -11,6 +12,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
         private ComboBox[] desktopCombos; 
 
         public SettingsDialog(SettingValues settings) {
+
+            InitializeComponent();
 
             this.settings = settings;
             this.desktopCombos = 
@@ -28,8 +31,6 @@ namespace VirtualDesktopGridSwitcher.Settings {
                     comboBox11,
                     comboBox12
                 };
-
-            InitializeComponent();
 
             PopulateComboBoxKeyValues(comboBoxLeft);
             PopulateComboBoxKeyValues(comboBoxRight);
@@ -217,5 +218,10 @@ namespace VirtualDesktopGridSwitcher.Settings {
         private void comboBoxKey_KeyPress(object sender, KeyPressEventArgs e) {
             e.Handled = true;
         }
+
+        private void pictureBoxDonate_Click(object sender, EventArgs e) {
+            Process.Start("http://paypal.me/SimonLiddington");
+        }
+
     }
 }
