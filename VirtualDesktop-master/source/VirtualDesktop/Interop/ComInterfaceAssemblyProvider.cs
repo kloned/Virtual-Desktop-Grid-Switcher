@@ -83,7 +83,7 @@ namespace WindowsDesktop.Interop
 			var executingAssembly = Assembly.GetExecutingAssembly();
 			var interfaceVersion = _interfaceVersions
 				.Reverse()
-				.First(build => build <= ProductInfo.OSBuild);
+				.First(build => build <= ProductInfo.OSBuild || build == _interfaceVersions.First());
 			var interfaceNames = executingAssembly
 				.GetTypes()
 				.SelectMany(x => x.GetComInterfaceNamesIfWrapper(interfaceVersion))
