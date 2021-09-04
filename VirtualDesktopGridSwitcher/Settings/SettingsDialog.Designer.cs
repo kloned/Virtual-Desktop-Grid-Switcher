@@ -793,7 +793,7 @@
             // pictureBoxDonate
             // 
             this.pictureBoxDonate.Image = global::VirtualDesktopGridSwitcher.Properties.Resources.Donate;
-            this.pictureBoxDonate.Location = new System.Drawing.Point(313, 407);
+            this.pictureBoxDonate.Location = new System.Drawing.Point(313, 408);
             this.pictureBoxDonate.Name = "pictureBoxDonate";
             this.pictureBoxDonate.Size = new System.Drawing.Size(74, 21);
             this.pictureBoxDonate.TabIndex = 61;

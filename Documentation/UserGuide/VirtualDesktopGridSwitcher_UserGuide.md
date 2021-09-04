@@ -1,4 +1,4 @@
-﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
+﻿﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
 ========================================
 
 Virtual Desktop Grid Switcher allows you to switch and move the current active window between Windows 10 Virtual Desktops in a virtual grid layout using arrow keys. This is helpful if like me you use more than a few desktops. The default layout is a 3x3 grid of desktops.
@@ -18,7 +18,7 @@ Grid Layout
 
 You can change the Columns and Rows in your grid. If you do this you will probably want to change the icons used for each desktop. These can be found in the Icons folder of your installation. Alternative icon sets are available from VirtuaWin which inspired the development of this program at https://virtuawin.sourceforge.io/?page_id=48
 
-When you increase the number of desktops required they automatically created for you. Reducing the number required leaves them for you to delete using the usual method (but you will not be able to access them via the arrow keys).
+When you increase the number of desktops required they are automatically created for you. Reducing the number required leaves them for you to delete using the usual method (but you will not be able to access them via the arrow keys).
 
 DO NOT PUT TOO LARGE NUMBERS IN THE ROWS AND COLUMNS AS WINDOWS WILL GRIND TO A HALT with so many desktops and you will have a hard time deleting them all. Even restarting won’t help!
 
@@ -33,9 +33,11 @@ Note if another program is already using a key combination you will be warned th
 
 Each operation Switch/Move/Always On Top/Sticky Window can be enabled/disabled separately.
 
-You can configure one or two sets of direction keys for Switch/Move.
+You can configure the direction keys for Switch/Move to use different keys than the arrow keys.
 
-You can enable number and/or F1-12 keys to switch/move to a particular desktop by number. Note that the F1-12 keys are very commonly already assigned for other uses.
+You can enable number and/or F1-12 keys to switch/move to a particular desktop by number and also a set of custom keys for desktops 1-12 (it is actually possible to configure more if you directly edit the file VirtualDesktopGridSwitcher.Settings - click Apply in settings if you don't have that file). Note that the F1-12 keys are very commonly already assigned for other uses.
+
+All of the above use the same modifier key combinations for Switch/Move.
 
 Window Activation on Switch From Empty Desktop
 ----------------------------------------------
@@ -51,7 +53,7 @@ This also happens for PDFs opened in Acrobat Reader with tabbed mode disabled.
 
 Virtual Desktop Grid Switcher attempts to detect the switching of the desktop to that of the other document and then the new document in quick succession and moves the new document window to the original desktop. 
 
-If this is not working for you, you may need to increase the MoveOnNewWindowDetectTimeoutMs value in the VirtualDesktopGridSwitcher.Settings file - click Apply in settings if you don't have one. This is in milliseconds and determines what "quick succession" means. In 2.5.0.0 this was increased to 3 seconds since this seems to be necessary unless the file is simple to load in Excel.
+If this is not working for you, you may need to increase the MoveOnNewWindowDetectTimeoutMs value in the VirtualDesktopGridSwitcher.Settings file - click Apply in settings if you don't have one. This is in milliseconds and determines what "quick succession" means. In version 2.5.0.0 this was increased to 3 seconds since this seems to be necessary unless the file is simple to load in Excel.
 
 You can also add the executable name for other programs you think might benefit from this to MoveOnNewWindowExeNames (or remove word and excel if it is causing problems for you or prefer the original behaviour).
 
