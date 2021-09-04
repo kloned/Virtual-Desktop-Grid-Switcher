@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
+﻿﻿﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
 ========================================
 
 Virtual Desktop Grid Switcher allows you to switch and move the current active window between Windows 10 Virtual Desktops in a virtual grid layout using arrow keys. This is helpful if like me you use more than a few desktops. The default layout is a 3x3 grid of desktops.
@@ -7,11 +7,11 @@ You can also make a window always visible on top of other windows or sticky (vis
 
 Once the application is running you will see a new icon in your system tray.
 
-![image1](./media/image1.png)
+![image1](./attachment/image1.png)
 
 If you right click this you can exit or modify the settings.
 
-![image2](./media/image2.png)
+![image2](./attachment/image2.png)
 
 Grid Layout
 -----------
