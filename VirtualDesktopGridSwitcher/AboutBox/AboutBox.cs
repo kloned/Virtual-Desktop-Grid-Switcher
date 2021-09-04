@@ -11,7 +11,7 @@ namespace VirtualDesktopGridSwitcher.AboutBox
 			InitializeComponent();
 			this.Text = String.Format("About {0}", AssemblyTitle);
 			this.labelProductName.Text = AssemblyProduct;
-			this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+			this.labelVersion.Text = String.Format("Version {0} Alpha", AssemblyVersion);
 			this.labelCopyright.Text = AssemblyCopyright;
 			this.textBoxDescription.Text = AssemblyDescription;
 		}
