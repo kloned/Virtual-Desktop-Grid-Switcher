@@ -26,7 +26,7 @@ namespace WindowsDesktop
 		internal ComObjects ComObjects { get; private set; }
 		
 		public Task Initialize()
-			=> this.Initialize(TaskScheduler.Current);
+			=> this.Initialize(TaskScheduler.FromCurrentSynchronizationContext());
 
 		public Task Initialize(TaskScheduler scheduler)
 		{
