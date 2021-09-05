@@ -23,6 +23,8 @@ namespace WindowsDesktop.Interop
 
 		public ApplicationViewCollection ApplicationViewCollection { get; private set; }
 
+		public bool IsAvailable { get; private set; } = false;
+
 		public ComObjects(ComInterfaceAssembly assembly)
 		{
 			this._assembly = assembly;
@@ -37,6 +39,7 @@ namespace WindowsDesktop.Interop
 
 		private void Initialize()
 		{
+			this.IsAvailable = false;
 			VirtualDesktopCache.Initialize(this._assembly);
 
 			this.VirtualDesktopManager = (IVirtualDesktopManager)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID.VirtualDesktopManager));
@@ -62,6 +65,7 @@ namespace WindowsDesktop.Interop
 
 			this._listener?.Dispose();
 			this._listener = this.VirtualDesktopNotificationService.Register(VirtualDesktopNotification.CreateInstance(this._assembly));
+			this.IsAvailable = true;
 		}
 
 		public void Dispose()
