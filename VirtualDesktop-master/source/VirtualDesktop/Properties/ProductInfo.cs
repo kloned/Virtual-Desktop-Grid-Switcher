@@ -36,7 +36,8 @@ namespace WindowsDesktop.Properties
 
 		internal static DirectoryInfo LocalAppData => _localAppDataLazy.Value;
 
-
+		// Once windows 11 comes out this will probably report the latest build that is Windows 10 (or Windows 11 Preview)
+		// until the app.manifest has the Windows 11 sSupportedOS ID
 		internal static int OSBuild => Environment.OSVersion.Version.Build;
 	}
 }

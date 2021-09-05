@@ -37,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>Icons\1.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -140,6 +143,7 @@
     <Content Include="Icons\Read Me.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="app.manifest" />
     <None Include="Resources\Donate.png" />
   </ItemGroup>
   <ItemGroup />
