@@ -11,9 +11,11 @@ namespace VirtualDesktopGridSwitcher.AboutBox
 			InitializeComponent();
 			this.Text = String.Format("About {0}", AssemblyTitle);
 			this.labelProductName.Text = AssemblyProduct;
-			this.labelVersion.Text = String.Format("Version {0} Alpha", AssemblyVersion);
+			this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
 			this.labelCopyright.Text = AssemblyCopyright;
 			this.textBoxDescription.Text = AssemblyDescription;
+			this.labelOSVersion.Text = 
+				"OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + " / " + Environment.OSVersion.Version.ToString();
 		}
 
 		#region Assembly Attribute Accessors
@@ -94,6 +96,6 @@ namespace VirtualDesktopGridSwitcher.AboutBox
 				return ((AssemblyCompanyAttribute)attributes[0]).Company;
 			}
 		}
-		#endregion
-	}
+        #endregion
+    }
 }
