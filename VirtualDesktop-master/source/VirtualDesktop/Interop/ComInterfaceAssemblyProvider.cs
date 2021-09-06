@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +6,15 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using WindowsDesktop.Properties;
+
+#if NET472
 using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+#else
+using System.Runtime.Loader;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+#endif
 
 namespace WindowsDesktop.Interop
 {
@@ -19,9 +26,10 @@ namespace WindowsDesktop.Interop
 		private static readonly Regex _assemblyRegex = new Regex(@"VirtualDesktop\.(?<build>\d{5}?)(\.\w*|)\.dll");
 		private static readonly string _defaultAssemblyDirectoryPath = Path.Combine(ProductInfo.LocalAppData.FullName, "assemblies");
 		private static readonly Version _requireVersion = new Version("1.0");
+		private static readonly int[] _interfaceVersions = new[] { 10240, 20231, 21313, 21359 };
 
 		private readonly string _assemblyDirectoryPath;
-		
+
 		public ComInterfaceAssemblyProvider(string assemblyDirectoryPath)
 		{
 			this._assemblyDirectoryPath = assemblyDirectoryPath ?? _defaultAssemblyDirectoryPath;
@@ -29,13 +37,13 @@ namespace WindowsDesktop.Interop
 
 		public Assembly GetAssembly()
 		{
-			var assembly = this.GetExisitingAssembly();
+			var assembly = this.GetExistingAssembly();
 			if (assembly != null) return assembly;
 
 			return this.CreateAssembly();
 		}
 
-		private Assembly GetExisitingAssembly()
+		private Assembly GetExistingAssembly()
 		{
 			var searchTargets = new[]
 			{
@@ -73,9 +81,12 @@ namespace WindowsDesktop.Interop
 		private Assembly CreateAssembly()
 		{
 			var executingAssembly = Assembly.GetExecutingAssembly();
+			var interfaceVersion = _interfaceVersions
+				.Reverse()
+				.First(build => build <= ProductInfo.OSBuild);
 			var interfaceNames = executingAssembly
 				.GetTypes()
-				.Select(x => x.GetComInterfaceNameIfWrapper())
+				.SelectMany(x => x.GetComInterfaceNamesIfWrapper(interfaceVersion))
 				.Where(x => x != null)
 				.ToArray();
 			var iids = IID.GetIIDs(interfaceNames);
@@ -87,7 +98,9 @@ namespace WindowsDesktop.Interop
 				{
 					using (var reader = new StreamReader(stream, Encoding.UTF8))
 					{
-						var sourceCode = reader.ReadToEnd().Replace("{VERSION}", ProductInfo.OSBuild.ToString());
+						var sourceCode = reader.ReadToEnd()
+							.Replace("{VERSION}", ProductInfo.OSBuild.ToString())
+							.Replace("{BUILD}", interfaceVersion.ToString());
 						compileTargets.Add(sourceCode);
 					}
 				}
@@ -95,11 +108,15 @@ namespace WindowsDesktop.Interop
 
 			foreach (var name in executingAssembly.GetManifestResourceNames())
 			{
-				var typeName = Path.GetFileNameWithoutExtension(name)?.Split('.').LastOrDefault();
+				var texts = Path.GetFileNameWithoutExtension(name)?.Split('.');
+				var typeName = texts.LastOrDefault();
 				if (typeName == null) continue;
+
+				if (int.TryParse(string.Concat(texts[texts.Length - 2].Skip(1)), out var build) && build != interfaceVersion) continue;
 
 				var interfaceName = interfaceNames.FirstOrDefault(x => typeName == x);
 				if (interfaceName == null) continue;
+				if (!iids.ContainsKey(interfaceName)) continue;
 
 				var stream = executingAssembly.GetManifestResourceStream(name);
 				if (stream == null) continue;
@@ -114,11 +131,13 @@ namespace WindowsDesktop.Interop
 			return this.Compile(compileTargets.ToArray());
 		}
 
-		private Assembly Compile(string[] sources)
+		private Assembly Compile(IEnumerable<string> sources)
 		{
 			var dir = new DirectoryInfo(this._assemblyDirectoryPath);
+
 			if (!dir.Exists) dir.Create();
 
+#if NET472
 			using (var provider = new CSharpCodeProvider())
 			{
 				var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild));
@@ -131,8 +150,8 @@ namespace WindowsDesktop.Interop
 				cp.ReferencedAssemblies.Add("System.dll");
 				cp.ReferencedAssemblies.Add(Assembly.GetExecutingAssembly().Location);
 
-				var result = provider.CompileAssemblyFromSource(cp, sources);
-				if (result.Errors.Count > 0)
+				var result = provider.CompileAssemblyFromSource(cp, sources.ToArray());
+				if (result.Errors.Count > 0) 
 				{
 					var nl = Environment.NewLine;
 					var message = $"Failed to compile COM interfaces assembly.{nl}{string.Join(nl, result.Errors.OfType<CompilerError>().Select(x => $"  {x}"))}";
@@ -143,6 +162,32 @@ namespace WindowsDesktop.Interop
 				System.Diagnostics.Debug.WriteLine($"Assembly compiled: {path}");
 				return result.CompiledAssembly;
 			}
+#else
+			var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild));
+			var syntaxTrees = sources.Select(x => SyntaxFactory.ParseSyntaxTree(x));
+			var references = AppDomain.CurrentDomain.GetAssemblies()
+				.Concat(new[] { Assembly.GetExecutingAssembly(), })
+				.Select(x => x.Location)
+				.Select(x => MetadataReference.CreateFromFile(x));
+			var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+			var compilation = CSharpCompilation.Create(_assemblyName)
+				.WithOptions(options)
+				.WithReferences(references)
+				.AddSyntaxTrees(syntaxTrees);
+
+			var result = compilation.Emit(path);
+			if (result.Success)
+			{
+				return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+			}
+
+			File.Delete(path);
+
+			var nl = Environment.NewLine;
+			var message = $"Failed to compile COM interfaces assembly.{nl}{string.Join(nl, result.Diagnostics.Select(x => $"  {x.GetMessage()}"))}";
+
+			throw new Exception(message);
+#endif
 		}
 	}
 }

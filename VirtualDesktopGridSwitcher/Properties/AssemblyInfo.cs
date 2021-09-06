@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Virtual Desktop Grid Switcher")]
-[assembly: AssemblyDescription("Windows 10 Desktop Switcher using grid layout")]
+[assembly: AssemblyDescription("Windows 10 / 11 Desktop Switcher using grid layout")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VirtualDesktopGridSwitcher")]
-[assembly: AssemblyCopyright("Copyright © Simon Liddington 2016-21")]
+[assembly: AssemblyCopyright("Copyright © Simon Liddington 2016-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.5.0.0")]
-[assembly: AssemblyFileVersion("2.5.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]

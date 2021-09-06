@@ -18,13 +18,22 @@ namespace WindowsDesktop
 		#endregion
 
 		private Task _initializationTask;
-		
+		private ComObjects _comObjects;
+
 		public string ComInterfaceAssemblyPath { get; set; }
 
 		public bool AutoRestart { get; set; } = true;
 
-		internal ComObjects ComObjects { get; private set; }
-		
+		internal ComObjects ComObjects {
+			get { 
+				while(!_comObjects.IsAvailable) {
+					Thread.Sleep(1);
+				}
+				return _comObjects; 
+			}
+			private set => _comObjects = value;
+		}
+
 		public Task Initialize()
 			=> this.Initialize(TaskScheduler.FromCurrentSynchronizationContext());
 

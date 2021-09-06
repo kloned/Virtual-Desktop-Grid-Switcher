@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
 using WindowsDesktop.Internal;
+using WindowsDesktop.Properties;
 
 namespace WindowsDesktop.Interop
 {
@@ -22,6 +23,8 @@ namespace WindowsDesktop.Interop
 
 		public ApplicationViewCollection ApplicationViewCollection { get; private set; }
 
+		public bool IsAvailable { get; private set; } = false;
+
 		public ComObjects(ComInterfaceAssembly assembly)
 		{
 			this._assembly = assembly;
@@ -36,16 +39,33 @@ namespace WindowsDesktop.Interop
 
 		private void Initialize()
 		{
+			this.IsAvailable = false;
 			VirtualDesktopCache.Initialize(this._assembly);
 
 			this.VirtualDesktopManager = (IVirtualDesktopManager)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID.VirtualDesktopManager));
-			this.VirtualDesktopManagerInternal = new VirtualDesktopManagerInternal(this._assembly);
+			if (ProductInfo.OSBuild >= 21359)
+			{
+				this.VirtualDesktopManagerInternal = new VirtualDesktopManagerInternal21359(this._assembly);
+			}
+			else if (ProductInfo.OSBuild >= 21313)
+			{
+				this.VirtualDesktopManagerInternal = new VirtualDesktopManagerInternal21313(this._assembly);
+			}
+			else if (ProductInfo.OSBuild >= 20231)
+			{
+				this.VirtualDesktopManagerInternal = new VirtualDesktopManagerInternal20231(this._assembly);
+			}
+			else
+			{
+				this.VirtualDesktopManagerInternal = new VirtualDesktopManagerInternal10240(this._assembly);
+			}
 			this.VirtualDesktopNotificationService = new VirtualDesktopNotificationService(this._assembly);
 			this.VirtualDesktopPinnedApps = new VirtualDesktopPinnedApps(this._assembly);
 			this.ApplicationViewCollection = new ApplicationViewCollection(this._assembly);
 
 			this._listener?.Dispose();
 			this._listener = this.VirtualDesktopNotificationService.Register(VirtualDesktopNotification.CreateInstance(this._assembly));
+			this.IsAvailable = true;
 		}
 
 		public void Dispose()
@@ -56,7 +76,7 @@ namespace WindowsDesktop.Interop
 
 		private class ExplorerRestartListenerWindow : TransparentWindow
 		{
-			private uint _explorerRestertedMessage;
+			private uint _explorerRestartedMessage;
 			private readonly Action _action;
 
 			public ExplorerRestartListenerWindow(Action action)
@@ -68,12 +88,12 @@ namespace WindowsDesktop.Interop
 			public override void Show()
 			{
 				base.Show();
-				this._explorerRestertedMessage = NativeMethods.RegisterWindowMessage("TaskbarCreated");
+				this._explorerRestartedMessage = NativeMethods.RegisterWindowMessage("TaskbarCreated");
 			}
 
 			protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 			{
-				if (msg == this._explorerRestertedMessage)
+				if (msg == this._explorerRestartedMessage)
 				{
 					this._action();
 					return IntPtr.Zero;
