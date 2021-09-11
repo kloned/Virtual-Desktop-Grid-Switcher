@@ -11,6 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+using System.ComponentModel;
 
 namespace VirtualDesktopGridSwitcher {
 
@@ -520,17 +521,15 @@ namespace VirtualDesktopGridSwitcher {
             
             hotkeys = new List<Hotkey>();
 
-            if (settings.DirectionKeysEnabled) {
-                RegisterSwitchHotkey(settings.LeftKey, delegate { this.Switch(Left); });
-                RegisterSwitchHotkey(settings.RightKey, delegate { this.Switch(Right); });
-                RegisterSwitchHotkey(settings.UpKey, delegate { this.Switch(Up); });
-                RegisterSwitchHotkey(settings.DownKey, delegate { this.Switch(Down); });
+            RegisterSwitchDirHotkey(settings.LeftKey, delegate { this.Switch(Left); });
+            RegisterSwitchDirHotkey(settings.RightKey, delegate { this.Switch(Right); });
+            RegisterSwitchDirHotkey(settings.UpKey, delegate { this.Switch(Up); });
+            RegisterSwitchDirHotkey(settings.DownKey, delegate { this.Switch(Down); });
 
-                RegisterMoveHotkey(settings.LeftKey, delegate { Move(Left); });
-                RegisterMoveHotkey(settings.RightKey, delegate { Move(Right); });
-                RegisterMoveHotkey(settings.UpKey, delegate { Move(Up); });
-                RegisterMoveHotkey(settings.DownKey, delegate { Move(Down); });
-            }
+            RegisterMoveDirHotkey(settings.LeftKey, delegate { Move(Left); });
+            RegisterMoveDirHotkey(settings.RightKey, delegate { Move(Right); });
+            RegisterMoveDirHotkey(settings.UpKey, delegate { Move(Up); });
+            RegisterMoveDirHotkey(settings.DownKey, delegate { Move(Down); });
 
             if (settings.NumbersEnabled) {
                 for (int keyNumber = 1; keyNumber <= Math.Min(DesktopCount, 9); ++keyNumber) {
@@ -538,9 +537,8 @@ namespace VirtualDesktopGridSwitcher {
                     Keys keycode =
                         (Keys)Enum.Parse(typeof(Keys), "D" + keyNumber.ToString());
 
-                    RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
-
-                    RegisterMoveHotkey(keycode, delegate { this.Move(desktopIndex); });
+                    RegisterSwitchPosHotkey(keycode, delegate { this.Switch(desktopIndex); });
+                    RegisterMovePosHotkey(keycode, delegate { this.Move(desktopIndex); });
                 }
             }
 
@@ -550,112 +548,71 @@ namespace VirtualDesktopGridSwitcher {
                     Keys keycode =
                         (Keys)Enum.Parse(typeof(Keys), "F" + keyNumber.ToString());
 
-                    RegisterSwitchHotkey(keycode, delegate { this.Switch(desktopIndex); });
-
-                    RegisterMoveHotkey(keycode, delegate { this.Move(desktopIndex); });
+                    RegisterSwitchPosHotkey(keycode, delegate { this.Switch(desktopIndex); });
+                    RegisterMovePosHotkey(keycode, delegate { this.Move(desktopIndex); });
                 }
             }
 
             for (int i = 0; i < settings.DesktopKeys.Count; ++i) {
                 var desktopIndex = i;
-                RegisterSwitchHotkey(settings.DesktopKeys[i], delegate { this.Switch(desktopIndex); });
-                RegisterMoveHotkey(settings.DesktopKeys[i], delegate { this.Move(desktopIndex); });
+                RegisterSwitchPosHotkey(settings.DesktopKeys[i], delegate { this.Switch(desktopIndex); });
+                RegisterMovePosHotkey(settings.DesktopKeys[i], delegate { this.Move(desktopIndex); });
             }
 
             RegisterToggleStickyHotKey();
             RegisterToggleAlwaysOnTopHotKey();
         }
 
-        private void RegisterSwitchHotkey(Keys keyCode, Action action) {
-
-			if(!settings.SwitchEnabled || keyCode == Keys.None) 
-                return;
-
-            Hotkey hk = new Hotkey() {
-                Control = settings.SwitchModifiers.Ctrl,
-                Windows = settings.SwitchModifiers.Win,
-                Alt = settings.SwitchModifiers.Alt,
-                Shift = settings.SwitchModifiers.Shift,
-                KeyCode = keyCode
-            };
-            hk.Pressed += delegate { action(); };
-            if (hk.Register(null)) {
-                hotkeys.Add(hk);
-            } else {
-                MessageBox.Show("Failed to register switch hotkey for " + hk.KeyCode,
-                                "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-            }
+        private void RegisterSwitchDirHotkey(Keys keyCode, HandledEventHandler action) {
+            RegisterHotkey(keyCode, settings.SwitchDirModifiers, settings.SwitchDirEnabled, "switch by direction", action);
         }
 
-        private void RegisterMoveHotkey(Keys keyCode, Action action)
-        {
-			if (!settings.MoveEnabled || keyCode == Keys.None) 
-                return;
+        private void RegisterMoveDirHotkey(Keys keyCode, HandledEventHandler action) {
+            RegisterHotkey(keyCode, settings.MoveDirModifiers, settings.MoveDirEnabled, "move by direction", action);
+        }
 
-			Hotkey hk = new Hotkey()
-            {
-                Control = settings.MoveModifiers.Ctrl,
-                Windows = settings.MoveModifiers.Win,
-                Alt = settings.MoveModifiers.Alt,
-                Shift = settings.MoveModifiers.Shift,
-                KeyCode = keyCode
-            };
-            hk.Pressed += delegate { action(); };
-            if (hk.Register(null))
-            {
-                hotkeys.Add(hk);
-            }
-            else
-            {
-                MessageBox.Show("Failed to register move window hotkey for " + hk.KeyCode,
-                                "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-            }
+        private void RegisterSwitchPosHotkey(Keys keyCode, HandledEventHandler action) {
+            RegisterHotkey(keyCode, settings.SwitchPosModifiers, settings.SwitchPosEnabled, "switch by position", action);
+        }
+
+        private void RegisterMovePosHotkey(Keys keyCode, HandledEventHandler action) {
+            RegisterHotkey(keyCode, settings.MovePosModifiers, settings.MovePosEnabled, "move by position", action);
         }
 
         private void RegisterToggleStickyHotKey() {
-			
-            if(!settings.StickyWindowEnabled || settings.StickyWindowHotKey.Key == Keys.None) 
-                return;
-
-            Hotkey hk = new Hotkey() {
-                Control = settings.StickyWindowHotKey.Modifiers.Ctrl,
-                Windows = settings.StickyWindowHotKey.Modifiers.Win,
-                Alt = settings.StickyWindowHotKey.Modifiers.Alt,
-                Shift = settings.StickyWindowHotKey.Modifiers.Shift,
-                KeyCode = settings.StickyWindowHotKey.Key
-            };
-            hk.Pressed += delegate { ToggleWindowSticky(WinAPI.GetForegroundWindow()); };
-            if (hk.Register(null)) {
-                hotkeys.Add(hk);
-            } else {
-                MessageBox.Show("Failed to register toggle sticky window hotkey for " + hk.KeyCode,
-                                "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-            }
+            RegisterHotkey(
+                settings.StickyWindowHotKey.Key,
+                settings.StickyWindowHotKey.Modifiers,
+                settings.StickyWindowEnabled,
+                "toggle sticky window",
+                delegate { ToggleWindowSticky(WinAPI.GetForegroundWindow()); });
         }
 
         private void RegisterToggleAlwaysOnTopHotKey() {
+            RegisterHotkey(
+                settings.AlwaysOnTopHotkey.Key,
+                settings.AlwaysOnTopHotkey.Modifiers,
+                settings.AlwaysOnTopEnabled,
+                "toggle window always on top",
+                delegate { ToggleWindowAlwaysOnTop(WinAPI.GetForegroundWindow()); });
+        }
 
-			if(!this.settings.AlwaysOnTopEnabled || settings.AlwaysOnTopHotkey.Key == Keys.None) 
+        private void RegisterHotkey(Keys keyCode, SettingValues.Modifiers modifiers, bool enabled, string desc, HandledEventHandler action) {
+            if (!enabled || keyCode == Keys.None)
                 return;
 
             Hotkey hk = new Hotkey() {
-                Control = settings.AlwaysOnTopHotkey.Modifiers.Ctrl,
-                Windows = settings.AlwaysOnTopHotkey.Modifiers.Win,
-                Alt = settings.AlwaysOnTopHotkey.Modifiers.Alt,
-                Shift = settings.AlwaysOnTopHotkey.Modifiers.Shift,
-                KeyCode = settings.AlwaysOnTopHotkey.Key
+                Control = modifiers.Ctrl,
+                Windows = modifiers.Win,
+                Alt = modifiers.Alt,
+                Shift = modifiers.Shift,
+                KeyCode = keyCode
             };
-            hk.Pressed += delegate { ToggleWindowAlwaysOnTop(WinAPI.GetForegroundWindow()); };
+            hk.Pressed += action;
             if (hk.Register(null)) {
                 hotkeys.Add(hk);
             } else {
-                MessageBox.Show("Failed to register toggle window always on top hotkey for " + hk.KeyCode,
+                MessageBox.Show("Failed to register " + desc + " hotkey for " + hk.KeyCode,
                                 "Warning",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);

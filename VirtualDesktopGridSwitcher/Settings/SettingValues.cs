@@ -34,25 +34,38 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
         public bool WrapAround = false;
 
-        public Modifiers SwitchModifiers = 
+        public Modifiers SwitchDirModifiers = 
             new Modifiers {
                 Ctrl = true, Win = false, Alt = true, Shift = false
             };
 
-		public bool SwitchEnabled = true;
+		public bool SwitchDirEnabled = true;
 
-		public Modifiers MoveModifiers =
+		public Modifiers MoveDirModifiers =
             new Modifiers {
                 Ctrl = true, Win = false, Alt = true, Shift = true
             };
 
-		public bool MoveEnabled = true;
+		public bool MoveDirEnabled = true;
 
-        public bool DirectionKeysEnabled = true;
         public Keys LeftKey = Keys.Left;
         public Keys RightKey = Keys.Right;
         public Keys UpKey = Keys.Up;
         public Keys DownKey = Keys.Down;
+
+        public Modifiers SwitchPosModifiers =
+            new Modifiers {
+                Ctrl = true, Win = false, Alt = true, Shift = false
+            };
+
+        public bool SwitchPosEnabled = true;
+
+        public Modifiers MovePosModifiers =
+            new Modifiers {
+                Ctrl = true, Win = false, Alt = true, Shift = true
+            };
+
+        public bool MovePosEnabled = true;
 
         public bool NumbersEnabled = true;
         public bool FKeysEnabled = false;
@@ -89,7 +102,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
 
-        public int SettingsVersion;
+        public int SettingsVersion = 3;
 
         private static string SettingsFileName { 
             get {
@@ -182,6 +195,12 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 save = true;
             }
 
+            if (SettingsVersion == 2) {
+                // All handled in LoadOldSettings()
+                SettingsVersion = 3;
+                save = true;
+            }
+
             if (save) {
                 Save();
             }
@@ -193,36 +212,36 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
             var switchCtrl = xdoc.Element("SettingValues").Element("CtrlModifierSwitch");
             if (switchCtrl != null) {
-                settings.SwitchModifiers.Ctrl = (bool)switchCtrl;
+                settings.SwitchDirModifiers.Ctrl = (bool)switchCtrl;
             }
             var switchWin = xdoc.Element("SettingValues").Element("WinModifierSwitch");
             if (switchWin != null) {
-                settings.SwitchModifiers.Win = (bool)switchWin;
+                settings.SwitchDirModifiers.Win = (bool)switchWin;
             }
             var switchAlt = xdoc.Element("SettingValues").Element("AltModifierSwitch");
             if (switchAlt != null) {
-                settings.SwitchModifiers.Alt = (bool)switchAlt;
+                settings.SwitchDirModifiers.Alt = (bool)switchAlt;
             }
             var switchShift = xdoc.Element("SettingValues").Element("ShiftModifierSwitch");
             if (switchShift != null) {
-                settings.SwitchModifiers.Shift = (bool)switchShift;
+                settings.SwitchDirModifiers.Shift = (bool)switchShift;
             }
 
             var moveCtrl = xdoc.Element("SettingValues").Element("CtrlModifierMove");
             if (moveCtrl != null) {
-                settings.MoveModifiers.Ctrl = (bool)moveCtrl;
+                settings.MoveDirModifiers.Ctrl = (bool)moveCtrl;
             }
             var moveWin = xdoc.Element("SettingValues").Element("WinModifierMove");
             if (moveWin != null) {
-                settings.MoveModifiers.Win = (bool)moveWin;
+                settings.MoveDirModifiers.Win = (bool)moveWin;
             }
             var moveAlt = xdoc.Element("SettingValues").Element("AltModifierMove");
             if (moveAlt != null) {
-                settings.MoveModifiers.Alt = (bool)moveAlt;
+                settings.MoveDirModifiers.Alt = (bool)moveAlt;
             }
             var moveShift = xdoc.Element("SettingValues").Element("ShiftModifierMove");
             if (moveShift != null) {
-                settings.MoveModifiers.Shift = (bool)moveShift;
+                settings.MoveDirModifiers.Shift = (bool)moveShift;
             }
 
             var fKeysForNumbers = xdoc.Element("SettingValues").Element("FKeysForNumbers");
@@ -230,6 +249,65 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 settings.FKeysEnabled = (bool)fKeysForNumbers;
             }
 
+            // Version 3
+
+            var switchModCtrl = xdoc.Element("SettingValues").Element("SwitchModifiers").Element("Ctrl");
+            if (switchModCtrl != null) {
+                settings.SwitchDirModifiers.Ctrl = (bool)switchModCtrl;
+                settings.SwitchPosModifiers.Ctrl = (bool)switchModCtrl;
+            }
+            var switchModWin = xdoc.Element("SettingValues").Element("SwitchModifiers").Element("Win");
+            if (switchModWin != null) {
+                settings.SwitchDirModifiers.Win = (bool)switchModWin;
+                settings.SwitchPosModifiers.Win = (bool)switchModWin;
+            }
+            var switchModAlt = xdoc.Element("SettingValues").Element("SwitchModifiers").Element("Alt");
+            if (switchModAlt != null) {
+                settings.SwitchDirModifiers.Alt = (bool)switchModAlt;
+                settings.SwitchPosModifiers.Alt = (bool)switchModAlt;
+            }
+            var switchModShift = xdoc.Element("SettingValues").Element("SwitchModifiers").Element("Shift");
+            if (switchModShift != null) {
+                settings.SwitchDirModifiers.Shift = (bool)switchModShift;
+                settings.SwitchPosModifiers.Shift = (bool)switchModShift;
+            }
+            var switchEnabled = xdoc.Element("SettingValues").Element("SwitchEnabled");
+            if (switchEnabled != null) {
+                settings.SwitchDirEnabled = (bool)switchEnabled;
+                settings.SwitchPosEnabled = (bool)switchEnabled;
+            }
+
+            var moveModCtrl = xdoc.Element("SettingValues").Element("MoveModifiers").Element("Ctrl");
+            if (moveModCtrl != null) {
+                settings.MoveDirModifiers.Ctrl = (bool)moveModCtrl;
+                settings.MovePosModifiers.Ctrl = (bool)moveModCtrl;
+            }
+            var moveModWin = xdoc.Element("SettingValues").Element("MoveModifiers").Element("Win");
+            if (moveModWin != null) {
+                settings.MoveDirModifiers.Win = (bool)moveModWin;
+                settings.MovePosModifiers.Win = (bool)moveModWin;
+            }
+            var moveModAlt = xdoc.Element("SettingValues").Element("MoveModifiers").Element("Alt");
+            if (moveModAlt != null) {
+                settings.MoveDirModifiers.Alt = (bool)moveModAlt;
+                settings.MovePosModifiers.Alt = (bool)moveModAlt;
+            }
+            var moveModShift = xdoc.Element("SettingValues").Element("MoveModifiers").Element("Shift");
+            if (moveModShift != null) {
+                settings.MoveDirModifiers.Shift = (bool)moveModShift;
+                settings.MovePosModifiers.Shift = (bool)moveModShift;
+            }
+            var moveEnabled = xdoc.Element("SettingValues").Element("MoveEnabled");
+            if (moveEnabled != null) {
+                settings.MoveDirEnabled = (bool)moveEnabled;
+                settings.MovePosEnabled = (bool)moveEnabled;
+            }
+
+            var dirKeysEnabled = xdoc.Element("SettingValues").Element("DirectionKeysEnabled");
+            if (dirKeysEnabled != null && !(bool)dirKeysEnabled) {
+                settings.SwitchDirEnabled = false;
+                settings.MoveDirEnabled = false;
+            }
         }
 
         public bool Save() {

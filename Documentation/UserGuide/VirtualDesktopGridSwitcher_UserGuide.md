@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
+﻿﻿﻿﻿﻿﻿﻿Virtual Desktop Grid Switcher User Guide
 ========================================
 
 Virtual Desktop Grid Switcher allows you to switch and move the current active window between Windows 10 / 11 Virtual Desktops in a virtual grid layout using arrow keys. This is helpful if like me you use more than a few desktops. The default layout is a 3x3 grid of desktops.
@@ -29,15 +29,17 @@ Key Assignment
 
 You can change the key combinations for switching desktops, moving the currently active window to another desktop and switching to that desktop, and the Always on Top and Sticky Window features.
 
-Note if another program is already using a key combination you will be warned that it could not be assigned. You will either need to change the key combinations or find out what is using it already and stop it from doing so. Often your graphics software has some of these keys assigned.
+Note that if another program is already using a key combination you will be warned that it could not be assigned. You will either need to change the key combinations or find out what is using it already and stop it from doing so. Often your graphics software has some of these keys assigned.
 
-Each operation Switch/Move/Always On Top/Sticky Window can be enabled/disabled separately.
+Each operation Switch/Move by Direction/Position and Always On Top/Sticky Window can be enabled/disabled separately. 
+
+The modifier keys for each group of operations can be configured separately.
 
 You can configure the direction keys for Switch/Move to use different keys than the arrow keys.
 
 You can enable number and/or F1-12 keys to switch/move to a particular desktop by number and also a set of custom keys for desktops 1-12 (it is actually possible to configure more if you directly edit the file VirtualDesktopGridSwitcher.Settings - click Apply in settings if you don't have that file). Note that the F1-12 keys are very commonly already assigned for other uses.
 
-All of the above use the same modifier key combinations for Switch/Move.
+For setting a key simply click in the key setting box and press the key you want. Pressing delete will toggle between assigning the delete key and clearing/disabling that key setting.
 
 Window Activation on Switch From Empty Desktop
 ----------------------------------------------

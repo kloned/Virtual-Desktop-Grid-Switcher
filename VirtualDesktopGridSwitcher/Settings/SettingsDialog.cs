@@ -66,23 +66,34 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
             checkBoxWrapAround.Checked = settings.WrapAround;
 
-            checkBoxCtrlModifierSwitch.Checked = settings.SwitchModifiers.Ctrl;
-            checkBoxWinModifierSwitch.Checked = settings.SwitchModifiers.Win;
-            checkBoxAltModifierSwitch.Checked = settings.SwitchModifiers.Alt;
-            checkBoxShiftModifierSwitch.Checked = settings.SwitchModifiers.Shift;
-            checkBoxEnabledSwitch.Checked = settings.SwitchEnabled;
+            checkBoxCtrlModifierSwitchDir.Checked = settings.SwitchDirModifiers.Ctrl;
+            checkBoxWinModifierSwitchDir.Checked = settings.SwitchDirModifiers.Win;
+            checkBoxAltModifierSwitchDir.Checked = settings.SwitchDirModifiers.Alt;
+            checkBoxShiftModifierSwitchDir.Checked = settings.SwitchDirModifiers.Shift;
+            checkBoxEnabledSwitchDir.Checked = settings.SwitchDirEnabled;
 
-            checkBoxCtrlModifierMove.Checked = settings.MoveModifiers.Ctrl;
-            checkBoxWinModifierMove.Checked = settings.MoveModifiers.Win;
-            checkBoxAltModifierMove.Checked = settings.MoveModifiers.Alt;
-            checkBoxShiftModifierMove.Checked = settings.MoveModifiers.Shift;
-            checkBoxEnabledMove.Checked = settings.MoveEnabled;
+            checkBoxCtrlModifierMoveDir.Checked = settings.MoveDirModifiers.Ctrl;
+            checkBoxWinModifierMoveDir.Checked = settings.MoveDirModifiers.Win;
+            checkBoxAltModifierMoveDir.Checked = settings.MoveDirModifiers.Alt;
+            checkBoxShiftModifierMoveDir.Checked = settings.MoveDirModifiers.Shift;
+            checkBoxEnabledMoveDir.Checked = settings.MoveDirEnabled;
 
-            checkBoxDirectionKeys.Checked = settings.DirectionKeysEnabled;
             SetComboBoxForKey(comboBoxLeft, settings.LeftKey);
             SetComboBoxForKey(comboBoxRight, settings.RightKey);
             SetComboBoxForKey(comboBoxUp, settings.UpKey);
             SetComboBoxForKey(comboBoxDown, settings.DownKey);
+
+            checkBoxCtrlModifierSwitchPos.Checked = settings.SwitchPosModifiers.Ctrl;
+            checkBoxWinModifierSwitchPos.Checked = settings.SwitchPosModifiers.Win;
+            checkBoxAltModifierSwitchPos.Checked = settings.SwitchPosModifiers.Alt;
+            checkBoxShiftModifierSwitchPos.Checked = settings.SwitchPosModifiers.Shift;
+            checkBoxEnabledSwitchPos.Checked = settings.SwitchPosEnabled;
+
+            checkBoxCtrlModifierMovePos.Checked = settings.MovePosModifiers.Ctrl;
+            checkBoxWinModifierMovePos.Checked = settings.MovePosModifiers.Win;
+            checkBoxAltModifierMovePos.Checked = settings.MovePosModifiers.Alt;
+            checkBoxShiftModifierMovePos.Checked = settings.MovePosModifiers.Shift;
+            checkBoxEnabledMovePos.Checked = settings.MovePosEnabled;
 
             checkBoxFKeys.Checked = settings.FKeysEnabled;
             checkBoxNumbers.Checked = settings.NumbersEnabled;
@@ -138,23 +149,34 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
             settings.WrapAround = checkBoxWrapAround.Checked;
 
-            settings.SwitchModifiers.Ctrl = checkBoxCtrlModifierSwitch.Checked;
-            settings.SwitchModifiers.Win = checkBoxWinModifierSwitch.Checked;
-            settings.SwitchModifiers.Alt = checkBoxAltModifierSwitch.Checked;
-            settings.SwitchModifiers.Shift = checkBoxShiftModifierSwitch.Checked;
-            settings.SwitchEnabled = checkBoxEnabledSwitch.Checked;
+            settings.SwitchDirModifiers.Ctrl = checkBoxCtrlModifierSwitchDir.Checked;
+            settings.SwitchDirModifiers.Win = checkBoxWinModifierSwitchDir.Checked;
+            settings.SwitchDirModifiers.Alt = checkBoxAltModifierSwitchDir.Checked;
+            settings.SwitchDirModifiers.Shift = checkBoxShiftModifierSwitchDir.Checked;
+            settings.SwitchDirEnabled = checkBoxEnabledSwitchDir.Checked;
 
-            settings.MoveModifiers.Ctrl = checkBoxCtrlModifierMove.Checked;
-            settings.MoveModifiers.Win = checkBoxWinModifierMove.Checked;
-            settings.MoveModifiers.Alt = checkBoxAltModifierMove.Checked;
-            settings.MoveModifiers.Shift = checkBoxShiftModifierMove.Checked;
-            settings.MoveEnabled = checkBoxEnabledMove.Checked;
+            settings.MoveDirModifiers.Ctrl = checkBoxCtrlModifierMoveDir.Checked;
+            settings.MoveDirModifiers.Win = checkBoxWinModifierMoveDir.Checked;
+            settings.MoveDirModifiers.Alt = checkBoxAltModifierMoveDir.Checked;
+            settings.MoveDirModifiers.Shift = checkBoxShiftModifierMoveDir.Checked;
+            settings.MoveDirEnabled = checkBoxEnabledMoveDir.Checked;
 
-            settings.DirectionKeysEnabled = checkBoxDirectionKeys.Checked;
             settings.LeftKey = GetKeyFromComboBox(comboBoxLeft);
             settings.RightKey = GetKeyFromComboBox(comboBoxRight);
             settings.UpKey = GetKeyFromComboBox(comboBoxUp);
             settings.DownKey = GetKeyFromComboBox(comboBoxDown);
+
+            settings.SwitchPosModifiers.Ctrl = checkBoxCtrlModifierSwitchPos.Checked;
+            settings.SwitchPosModifiers.Win = checkBoxWinModifierSwitchPos.Checked;
+            settings.SwitchPosModifiers.Alt = checkBoxAltModifierSwitchPos.Checked;
+            settings.SwitchPosModifiers.Shift = checkBoxShiftModifierSwitchPos.Checked;
+            settings.SwitchPosEnabled = checkBoxEnabledSwitchPos.Checked;
+
+            settings.MovePosModifiers.Ctrl = checkBoxCtrlModifierMovePos.Checked;
+            settings.MovePosModifiers.Win = checkBoxWinModifierMovePos.Checked;
+            settings.MovePosModifiers.Alt = checkBoxAltModifierMovePos.Checked;
+            settings.MovePosModifiers.Shift = checkBoxShiftModifierMovePos.Checked;
+            settings.MovePosEnabled = checkBoxEnabledMovePos.Checked;
 
             settings.FKeysEnabled = checkBoxFKeys.Checked;
             settings.NumbersEnabled = checkBoxNumbers.Checked;
