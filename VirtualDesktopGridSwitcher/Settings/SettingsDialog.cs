@@ -78,6 +78,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
             checkBoxShiftModifierMoveDir.Checked = settings.MoveDirModifiers.Shift;
             checkBoxEnabledMoveDir.Checked = settings.MoveDirEnabled;
 
+            checkBoxArrowKeys.Checked = settings.ArrowKeysEnabled;
+
             SetComboBoxForKey(comboBoxLeft, settings.LeftKey);
             SetComboBoxForKey(comboBoxRight, settings.RightKey);
             SetComboBoxForKey(comboBoxUp, settings.UpKey);
@@ -160,6 +162,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
             settings.MoveDirModifiers.Alt = checkBoxAltModifierMoveDir.Checked;
             settings.MoveDirModifiers.Shift = checkBoxShiftModifierMoveDir.Checked;
             settings.MoveDirEnabled = checkBoxEnabledMoveDir.Checked;
+
+            settings.ArrowKeysEnabled = checkBoxArrowKeys.Checked;
 
             settings.LeftKey = GetKeyFromComboBox(comboBoxLeft);
             settings.RightKey = GetKeyFromComboBox(comboBoxRight);

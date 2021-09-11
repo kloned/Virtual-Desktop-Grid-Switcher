@@ -521,6 +521,18 @@ namespace VirtualDesktopGridSwitcher {
             
             hotkeys = new List<Hotkey>();
 
+            if (settings.ArrowKeysEnabled) {
+                RegisterSwitchDirHotkey(Keys.Left, delegate { this.Switch(Left); });
+                RegisterSwitchDirHotkey(Keys.Right, delegate { this.Switch(Right); });
+                RegisterSwitchDirHotkey(Keys.Up, delegate { this.Switch(Up); });
+                RegisterSwitchDirHotkey(Keys.Down, delegate { this.Switch(Down); });
+
+                RegisterMoveDirHotkey(Keys.Left, delegate { Move(Left); });
+                RegisterMoveDirHotkey(Keys.Right, delegate { Move(Right); });
+                RegisterMoveDirHotkey(Keys.Up, delegate { Move(Up); });
+                RegisterMoveDirHotkey(Keys.Down, delegate { Move(Down); });
+            }
+
             RegisterSwitchDirHotkey(settings.LeftKey, delegate { this.Switch(Left); });
             RegisterSwitchDirHotkey(settings.RightKey, delegate { this.Switch(Right); });
             RegisterSwitchDirHotkey(settings.UpKey, delegate { this.Switch(Up); });
@@ -608,14 +620,24 @@ namespace VirtualDesktopGridSwitcher {
                 Shift = modifiers.Shift,
                 KeyCode = keyCode
             };
-            hk.Pressed += action;
-            if (hk.Register(null)) {
-                hotkeys.Add(hk);
-            } else {
-                MessageBox.Show("Failed to register " + desc + " hotkey for " + hk.KeyCode,
+            if (hotkeys.Any(h => h.ToString() == hk.ToString())) {
+                MessageBox.Show($"Hotkey {hk} has multiple assignments and will not be registered for {desc}",
                                 "Warning",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
+
+            } else {
+                hk.Pressed += action;
+                if (hk.Register(null)) {
+                    hotkeys.Add(hk);
+                } else {
+                    MessageBox.Show($"Failed to register hotkey {hk} for {desc}." + Environment.NewLine +
+                                    Environment.NewLine +
+                                    "It is probably being used by another program - often graphics software.",
+                                    "Warning",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                }
             }
         }
 
