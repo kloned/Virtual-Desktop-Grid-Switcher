@@ -209,6 +209,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
                     RightKey = Keys.None;
                     UpKey = Keys.None;
                     DownKey = Keys.None;
+                } else {
+                    ArrowKeysEnabled = false;
                 }
                 SettingsVersion = 3;
                 save = true;
