@@ -99,7 +99,7 @@ namespace WindowsDesktop
 			public static void RaiseWallpaperChanged(object sender, VirtualDesktop pDesktop, string path)
 			{
 				var oldPath = pDesktop.WallpaperPath;
-				pDesktop.SetWallpaperPathToCache(path);
+				pDesktop.SetDesktopWallpaperToCache(path);
 
 				var args = new VirtualDesktopWallpaperChangedEventArgs(pDesktop, oldPath, path);
 				WallpaperChanged?.Invoke(sender, args);

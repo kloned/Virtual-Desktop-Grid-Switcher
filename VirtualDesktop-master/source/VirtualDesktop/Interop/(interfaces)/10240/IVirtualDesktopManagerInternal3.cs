@@ -31,7 +31,7 @@ namespace WindowsDesktop.Interop
 
 		void Unknown1(IVirtualDesktop pDesktop, out IObjectArray pUnknown1, out IObjectArray pUnknown2);
 
-		void SetName(IVirtualDesktop pDesktop, [MarshalAs(UnmanagedType.HString)] string chName);
+		void SetDesktopName(IVirtualDesktop pDesktop, [MarshalAs(UnmanagedType.HString)] string chName);
 
 		void Unknown2(IApplicationView pUnknown0, IApplicationView pUnknown1);
 	}

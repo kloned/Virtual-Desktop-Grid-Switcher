@@ -47,7 +47,7 @@ namespace WindowsDesktop
 			{
 				if (ProductInfo.OSBuild < 20231 && this.ComVersion < 2) throw new PlatformNotSupportedException("This Windows 10 version is not supported.");
 
-				ComInterface.VirtualDesktopManagerInternal.SetName(this, value);
+				ComInterface.VirtualDesktopManagerInternal.SetDesktopName(this, value);
 			}
 		}
 
@@ -63,7 +63,7 @@ namespace WindowsDesktop
 			{
 				if (ProductInfo.OSBuild < 21313) throw new PlatformNotSupportedException("This Windows 10 version is not supported.");
 
-				ComInterface.VirtualDesktopManagerInternal.SetWallpaperPath(this, value);
+				ComInterface.VirtualDesktopManagerInternal.SetDesktopWallpaper(this, value);
 			}
 		}
 
@@ -161,7 +161,7 @@ namespace WindowsDesktop
 			this.RaisePropertyChanged(nameof(this.Name));
 		}
 
-		private void SetWallpaperPathToCache(string path)
+		private void SetDesktopWallpaperToCache(string path)
 		{
 			if (this._wallpaperPath == path) return;
 

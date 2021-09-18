@@ -4,11 +4,11 @@ using System.Runtime.CompilerServices;
 
 namespace WindowsDesktop.Interop
 {
-	[ComInterfaceWrapper("IVirtualDesktopManagerInternal", 3, 10240)]
-	internal sealed class VirtualDesktopManagerInternal10240 : VirtualDesktopManagerInternal
+	[ComInterfaceWrapper("IVirtualDesktopManagerInternal", 22449)]
+	internal sealed class VirtualDesktopManagerInternal22449 : VirtualDesktopManagerInternal
 	{
-		public VirtualDesktopManagerInternal10240(ComInterfaceAssembly assembly)
-			: base(assembly, latestVersion: 3)
+		public VirtualDesktopManagerInternal22449(ComInterfaceAssembly assembly)
+			: base(assembly)
 		{
 		}
 
@@ -19,12 +19,12 @@ namespace WindowsDesktop.Interop
 
 		public override VirtualDesktop GetCurrentDesktop()
 		{
-			return this.GetDesktop();
+			return this.GetDesktop(Args(IntPtr.Zero));
 		}
 
 		public override IEnumerable<VirtualDesktop> GetDesktops()
 		{
-			var array = this.Invoke<IObjectArray>();
+			var array = this.Invoke<IObjectArray>(Args(IntPtr.Zero));
 			var count = array.GetCount();
 			var vdType = this.ComInterfaceAssembly.GetType("IVirtualDesktop");
 
@@ -42,17 +42,17 @@ namespace WindowsDesktop.Interop
 
 		public override void SwitchDesktop(VirtualDesktop desktop)
 		{
-			this.Invoke(Args(desktop.ComObject));
+			this.Invoke(Args(IntPtr.Zero, desktop.ComObject));
 		}
 
 		public override VirtualDesktop CreateDesktopW()
 		{
-			return this.GetDesktop();
+			return this.GetDesktop(Args(IntPtr.Zero));
 		}
 
 		public override void MoveDesktop(VirtualDesktop desktop, int index)
 		{
-			throw new PlatformNotSupportedException("This Windows 10 version is not supported.");
+			this.Invoke(Args(desktop.ComObject, IntPtr.Zero, index));
 		}
 
 		public override void RemoveDesktop(VirtualDesktop pRemove, VirtualDesktop pFallbackDesktop)
@@ -70,14 +70,12 @@ namespace WindowsDesktop.Interop
 
 		public override void SetDesktopName(VirtualDesktop desktop, string name)
 		{
-			if (this.ComVersion < 2) throw new PlatformNotSupportedException("This Windows 10 version is not supported.");
-
 			this.Invoke(Args(desktop.ComObject, name));
 		}
 
 		public override void SetDesktopWallpaper(VirtualDesktop desktop, string path)
 		{
-			throw new PlatformNotSupportedException("This Windows 10 version is not supported.");
+			this.Invoke(Args(desktop.ComObject, path));
 		}
 	}
 }

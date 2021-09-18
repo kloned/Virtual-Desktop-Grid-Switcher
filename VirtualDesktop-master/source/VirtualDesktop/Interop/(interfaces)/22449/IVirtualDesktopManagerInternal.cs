@@ -17,6 +17,8 @@ namespace WindowsDesktop.Interop
 
 		IVirtualDesktop GetCurrentDesktop(IntPtr hWndOrMon);
 
+		IObjectArray GetAllCurrentDesktops();//7
+
 		IObjectArray GetDesktops(IntPtr hWndOrMon);
 
 		IVirtualDesktop GetAdjacentDesktop(IVirtualDesktop pDesktopReference, AdjacentDesktop uDirection);
@@ -25,16 +27,24 @@ namespace WindowsDesktop.Interop
 
 		IVirtualDesktop CreateDesktopW(IntPtr hWndOrMon);
 
+		IVirtualDesktop MoveDesktop(IVirtualDesktop pDesktopReference, IntPtr hWndOrMon, int nIndex);
+
 		void RemoveDesktop(IVirtualDesktop pRemove, IVirtualDesktop pFallbackDesktop);
 
 		IVirtualDesktop FindDesktop([In, MarshalAs(UnmanagedType.LPStruct)] Guid desktopId);
 
-		void GetDesktopSwitchIncludeExcludeViews(IVirtualDesktop pDesktop, out IObjectArray pUnknown1, out IObjectArray pUnknown2);
+		void GetDesktopSwitchIncludeExcludeViews(IVirtualDesktop desktop, out IObjectArray unknown1, out IObjectArray unknown2);//15
 
 		void SetDesktopName(IVirtualDesktop pDesktop, [MarshalAs(UnmanagedType.HString)] string chName);
 
-		void CopyDesktopState(IApplicationView pUnknown0, IApplicationView pUnknown1);
+		void SetDesktopWallpaper(IVirtualDesktop pDesktop, [MarshalAs(UnmanagedType.HString)] string chPath);
 
-		int GetDesktopIsPerMonitor();
+		void UpdateWallpaperPathForAllDesktops([MarshalAs(UnmanagedType.HString)] string wallpaper);//18
+
+		void CopyDesktopState(IApplicationView pView0, IApplicationView pView1);//19
+
+		int GetDesktopIsPerMonitor();//20
+
+		void GetDesktopIsPerMonitor(int state);//21
 	}
 }

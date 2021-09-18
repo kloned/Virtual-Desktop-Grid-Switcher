@@ -68,12 +68,12 @@ namespace WindowsDesktop.Interop
 		private VirtualDesktop GetDesktop(object[] parameters = null, [CallerMemberName] string methodName = "")
 			=> VirtualDesktopCache.GetOrCreate(this.Invoke<object>(parameters, methodName));
 
-		public override void SetName(VirtualDesktop desktop, string name)
+		public override void SetDesktopName(VirtualDesktop desktop, string name)
 		{
 			this.Invoke(Args(desktop.ComObject, name));
 		}
 
-		public override void SetWallpaperPath(VirtualDesktop desktop, string path)
+		public override void SetDesktopWallpaper(VirtualDesktop desktop, string path)
 		{
 			this.Invoke(Args(desktop.ComObject, path));
 		}
