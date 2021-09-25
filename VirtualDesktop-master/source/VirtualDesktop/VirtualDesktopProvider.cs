@@ -61,6 +61,7 @@ namespace WindowsDesktop
 				var assembly = new ComInterfaceAssembly(assemblyProvider.GetAssembly());
 
 				this.ComObjects = new ComObjects(assembly);
+				GC.Collect();
 			}
 		}
 

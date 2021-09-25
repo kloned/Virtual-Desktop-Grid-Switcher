@@ -15,6 +15,7 @@ namespace WindowsDesktop
 		public static bool IsPinnedWindow(IntPtr hWnd)
 		{
 			VirtualDesktopHelper.ThrowIfNotSupported();
+			VirtualDesktopHelper.ThrowIfInvalidWindow(hWnd);
 
 			return ComInterface.VirtualDesktopPinnedApps.IsViewPinned(hWnd.GetApplicationView());
 		}
@@ -26,6 +27,7 @@ namespace WindowsDesktop
 		public static void PinWindow(IntPtr hWnd)
 		{
 			VirtualDesktopHelper.ThrowIfNotSupported();
+			VirtualDesktopHelper.ThrowIfInvalidWindow(hWnd);
 
 			var view = hWnd.GetApplicationView();
 
@@ -42,6 +44,7 @@ namespace WindowsDesktop
 		public static void UnpinWindow(IntPtr hWnd)
 		{
 			VirtualDesktopHelper.ThrowIfNotSupported();
+			VirtualDesktopHelper.ThrowIfInvalidWindow(hWnd);
 
 			var view = hWnd.GetApplicationView();
 

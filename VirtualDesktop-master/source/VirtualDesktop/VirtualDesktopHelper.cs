@@ -17,6 +17,29 @@ namespace WindowsDesktop
 			}
 		}
 
+		internal static void ThrowIfInvalidWindow(IntPtr hWnd)
+		{
+			if (hWnd == IntPtr.Zero)
+			{
+				throw new ArgumentNullException(nameof(hWnd));
+			}
+
+			if (hWnd == NativeMethods.GetShellWindow())
+			{
+				throw new InvalidOperationException("It isn't allowed in the shell window.");
+			}
+
+			if (NativeMethods.GetClassName(hWnd) == "Shell_TrayWnd")
+			{
+				throw new InvalidOperationException("It isn't allowed in the taskbar.");
+			}
+
+			if (hWnd != NativeMethods.GetAncestor(hWnd, 2 /* GA_ROOT */))
+			{
+				throw new InvalidOperationException("It isn't the root window.");
+			}
+		}
+
 		/// <summary>
 		/// Determines whether this window is on the current virtual desktop.
 		/// </summary>
