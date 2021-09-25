@@ -16,7 +16,7 @@ namespace WindowsDesktop.Interop
 
 		void VirtualDesktopDestroyed(IVirtualDesktop pDesktopDestroyed, IVirtualDesktop pDesktopFallback);
 
-		void Unknown1(int nNumber);
+		void VirtualDesktopIsPerMonitor(int nNumber);
 
 		void VirtualDesktopRenamed(IVirtualDesktop pDesktop, [MarshalAs(UnmanagedType.HString)] string chName);
 
@@ -47,7 +47,7 @@ namespace WindowsDesktop.Interop
 			this.VirtualDesktopDestroyedCore(pDesktopDestroyed, pDesktopFallback);
 		}
 
-		public void Unknown1(int nNumber)
+		public void VirtualDesktopIsPerMonitor(int nNumber)
 		{
 		}
 

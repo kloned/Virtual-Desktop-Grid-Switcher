@@ -26,9 +26,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interop\(interfaces)\22449\IVirtualDesktop.cs" />
-    <Compile Remove="Interop\(interfaces)\22449\IVirtualDesktopManagerInternal.cs" />
-    <Compile Remove="Interop\(interfaces)\22449\IVirtualDesktopNotification.cs" />
     <Compile Remove="Interop\(interfaces)\AssemblyInfo.cs" />
     <Compile Remove="Interop\(interfaces)\IApplicationView.cs" />
     <Compile Remove="Interop\(interfaces)\IApplicationViewCollection.cs" />
@@ -54,9 +51,6 @@
 
   <ItemGroup>
     <None Remove="VirtualDesktop.csproj.DotSettings" />
-    <EmbeddedResource Include="Interop\(interfaces)\22449\IVirtualDesktop.cs" />
-    <EmbeddedResource Include="Interop\(interfaces)\22449\IVirtualDesktopManagerInternal.cs" />
-    <EmbeddedResource Include="Interop\(interfaces)\22449\IVirtualDesktopNotification.cs" />
     <EmbeddedResource Include="Interop\(interfaces)\AssemblyInfo.cs" />
     <EmbeddedResource Include="Interop\(interfaces)\IApplicationView.cs" />
     <EmbeddedResource Include="Interop\(interfaces)\IApplicationViewCollection.cs" />
@@ -84,7 +78,7 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net472' " >
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net472' ">
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.5.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>

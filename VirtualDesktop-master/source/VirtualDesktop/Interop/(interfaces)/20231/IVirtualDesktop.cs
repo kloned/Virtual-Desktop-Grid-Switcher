@@ -14,7 +14,7 @@ namespace WindowsDesktop.Interop
 
 		Guid GetID();
 
-		IntPtr Unknown1();
+		IntPtr GetMonitor();
 
 		[return: MarshalAs(UnmanagedType.HString)]
 		string GetName();

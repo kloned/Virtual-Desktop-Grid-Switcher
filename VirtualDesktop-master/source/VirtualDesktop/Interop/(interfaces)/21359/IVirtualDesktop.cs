@@ -14,7 +14,7 @@ namespace WindowsDesktop.Interop
 
 		Guid GetID();
 
-		IntPtr Unknown1();
+		IntPtr GetMonitor();
 
 		[return: MarshalAs(UnmanagedType.HString)]
 		string GetName();
@@ -22,6 +22,9 @@ namespace WindowsDesktop.Interop
 		[return: MarshalAs(UnmanagedType.HString)]
 		string GetWallpaperPath();
 	}
+
+	// see also:
+	//  https://github.com/MScholtes/VirtualDesktop/blob/f7c0018069f5500bce3b170a53fb71edee44ebec/VirtualDesktop.cs#L156-L173
 
 	public class VirtualDesktopCacheImpl : IVirtualDesktopCache
 	{

@@ -16,7 +16,7 @@ namespace WindowsDesktop.Interop
 
 		void VirtualDesktopDestroyed(IObjectArray p0, IVirtualDesktop pDesktopDestroyed, IVirtualDesktop pDesktopFallback);
 
-		void Unknown1(int nNumber);
+		void VirtualDesktopIsPerMonitor(int nNumber);
 
 		void VirtualDesktopMoved(IObjectArray p0, IVirtualDesktop pDesktop, int nFromIndex, int nToIndex);
 
@@ -51,7 +51,7 @@ namespace WindowsDesktop.Interop
 			this.VirtualDesktopDestroyedCore(pDesktopDestroyed, pDesktopFallback);
 		}
 
-		public void Unknown1(int nNumber)
+		public void VirtualDesktopIsPerMonitor(int nNumber)
 		{
 		}
 
