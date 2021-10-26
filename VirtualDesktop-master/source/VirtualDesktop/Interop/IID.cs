@@ -47,6 +47,22 @@ namespace WindowsDesktop.Interop
 				foreach (var kvp in fromRegistry) known.Add(kvp.Key, kvp.Value);
 			}
 
+			// In Windows 11 they started hiding the interface name in the registry
+			if (known.Count == 0) {
+				if (ProductInfo.OSBuild >= 22000) {
+					known =
+						new Dictionary<string, Guid> {
+							{ "IVirtualDesktopNotificationService", new Guid("0cd45e71-d927-4f15-8b0a-8fef525337bf") },
+							{ "IApplicationViewCollection", new Guid("1841c6d7-4f9d-42c0-af41-8747538f10e5") },
+							{ "IApplicationView", new Guid("372e1d3b-38d3-42e4-a15b-8ab2b178f513") },
+							{ "IVirtualDesktopPinnedApps", new Guid("4ce81583-1e4c-4632-a621-07a53543148f") },
+							{ "IVirtualDesktop", new Guid("536d3495-b208-4cc9-ae26-de8111275bf8") },
+							{ "IVirtualDesktopManagerInternal", new Guid("b2f925b9-5a0f-4d2e-9f4d-2b1507593c10") },
+							{ "IVirtualDesktopNotification", new Guid("cd403e52-deed-4c13-b437-b98380f2b1e8") }
+						};
+				}
+			}
+
 			return known;
 		}
 
@@ -70,6 +86,7 @@ namespace WindowsDesktop.Interop
 						if (key?.GetValue("") is string value)
 						{
 							var match = targets.FirstOrDefault(x => x == value);
+							//var match2 = targets.FirstOrDefault(x => value.IndexOf(x) != -1);
 							if (match != null && Guid.TryParse(key.Name.Split('\\').Last(), out var guid))
 							{
 								result[match] = guid;

@@ -53,7 +53,7 @@ namespace WindowsDesktop.Interop
 				_defaultAssemblyDirectoryPath,
 			};
 
-			foreach (var searchPath in searchTargets)
+			foreach (var searchPath in searchTargets.Distinct())
 			{
 				var dir = new DirectoryInfo(searchPath);
 				if (!dir.Exists) continue;
