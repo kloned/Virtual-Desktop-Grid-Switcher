@@ -159,6 +159,8 @@ namespace VirtualDesktopGridSwitcher.Settings {
             if (!File.Exists(SettingsFileName)) {
                 settings = new SettingValues();
             } else {
+                // Getting could not load VirtualDesktopGridSwitcher.XmlSerializers.dll?
+                // Enable "Just My Code" in debug options
                 XmlSerializer serializer = new XmlSerializer(typeof(SettingValues));
                 FileStream fs = new FileStream(SettingsFileName, FileMode.Open);
                 settings = (SettingValues)serializer.Deserialize(fs);
