@@ -21,9 +21,10 @@ namespace WindowsDesktop.Interop
 	internal class ComInterfaceAssemblyProvider
 	{
 		private const string _placeholderGuid = "00000000-0000-0000-0000-000000000000";
-		private const string _assemblyName = "VirtualDesktop.{0}.generated.dll";
+		private const string _assemblyName = "VirtualDesktop.{0}.{1}.generated.dll";
 
-		private static readonly Regex _assemblyRegex = new Regex(@"VirtualDesktop\.(?<build>\d{5}?)(\.\w*|)\.dll");
+		private static readonly string _assemblyTimestamp = File.GetCreationTimeUtc(Assembly.GetExecutingAssembly().Location).ToString("yyyyMMddHHmmss");
+		private static readonly Regex _assemblyRegex = new Regex(@"VirtualDesktop\.(?<build>\d{5}?)." + _assemblyTimestamp + @"(\.\w*|)\.dll");
 		private static readonly string _defaultAssemblyDirectoryPath = Path.Combine(ProductInfo.LocalAppData.FullName, "assemblies");
 		private static readonly Version _requireVersion = new Version("1.0");
 		private static readonly int[] _interfaceVersions = new[] { 10240, 20231, 21313, 21359 };
@@ -140,7 +141,7 @@ namespace WindowsDesktop.Interop
 #if NET472
 			using (var provider = new CSharpCodeProvider())
 			{
-				var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild));
+				var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild, _assemblyTimestamp));
 				var cp = new CompilerParameters
 				{
 					OutputAssembly = path,
@@ -163,7 +164,7 @@ namespace WindowsDesktop.Interop
 				return result.CompiledAssembly;
 			}
 #else
-			var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild));
+			var path = Path.Combine(dir.FullName, string.Format(_assemblyName, ProductInfo.OSBuild, _assemblyTimestamp));
 			var syntaxTrees = sources.Select(x => SyntaxFactory.ParseSyntaxTree(x));
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Concat(new[] { Assembly.GetExecutingAssembly(), })
