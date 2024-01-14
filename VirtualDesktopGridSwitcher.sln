@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktopGridSwitcher", "VirtualDesktopGridSwitcher\VirtualDesktopGridSwitcher.csproj", "{1EB11B78-8AD3-4250-AFD3-6AA5FAAE1406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDesktop", "VirtualDesktop-master\source\VirtualDesktop\VirtualDesktop.csproj", "{AB848ECD-76AA-41C0-B63D-86A8591B25AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualDesktop", "VirtualDesktop-master\src\VirtualDesktop\VirtualDesktop.csproj", "{9CC7073F-5456-45FE-B356-32ED6F757EEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,15 @@ Global
 		{1EB11B78-8AD3-4250-AFD3-6AA5FAAE1406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EB11B78-8AD3-4250-AFD3-6AA5FAAE1406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EB11B78-8AD3-4250-AFD3-6AA5FAAE1406}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB848ECD-76AA-41C0-B63D-86A8591B25AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB848ECD-76AA-41C0-B63D-86A8591B25AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB848ECD-76AA-41C0-B63D-86A8591B25AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB848ECD-76AA-41C0-B63D-86A8591B25AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC7073F-5456-45FE-B356-32ED6F757EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC7073F-5456-45FE-B356-32ED6F757EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC7073F-5456-45FE-B356-32ED6F757EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC7073F-5456-45FE-B356-32ED6F757EEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FEF11C7-4DC1-4A84-9C66-B98E4884D5F5}
 	EndGlobalSection
 EndGlobal
