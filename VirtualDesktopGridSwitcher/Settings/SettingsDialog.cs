@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Configuration;
 using System.Windows.Forms;
 
 namespace VirtualDesktopGridSwitcher.Settings {
@@ -137,7 +136,7 @@ namespace VirtualDesktopGridSwitcher.Settings {
                 }
 
                 if (rows * cols < settings.Rows * settings.Columns) {
-                    MessageBox.Show(this, "Unrequired desktops will not be removed");
+                    MessageBox.Show(this, "Unrequired desktops WILL be removed");
                 } else if (rows * cols > settings.Rows * settings.Columns) {
                     MessageBox.Show(this, "More desktops will be created to fill the grid if necessary");
                 }

@@ -80,7 +80,16 @@ namespace VirtualDesktopGridSwitcher {
                 lastActiveBrowserWindows = new IntPtr[desktops.Length];
 
                 VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-            } catch { }
+            } catch (Exception ex) {
+                MessageBox.Show(
+                    "There was an error initialising desktops." + Environment.NewLine +
+                    "Press Ctrl-C with this window active to copy text" + Environment.NewLine +
+                    Environment.NewLine +
+                    ex,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
 
             sysTrayProcess.ShowIconForDesktop(Current);
 
@@ -493,7 +502,7 @@ namespace VirtualDesktopGridSwitcher {
                 Debug.WriteLine("Move " + hwnd + " from " + Current + " to " + index);
 
                 try {
-                    VirtualDesktopHelper.MoveToDesktop(hwnd, VirtualDesktop.FromId(desktopIdLookup[index]));
+                    VirtualDesktop.MoveToDesktop(hwnd, VirtualDesktop.FromId(desktopIdLookup[index]));
                     activeWindows[index] = hwnd;
                     if (hwnd != WinAPI.GetForegroundWindow()) {
                         WinAPI.SetForegroundWindow(hwnd);
