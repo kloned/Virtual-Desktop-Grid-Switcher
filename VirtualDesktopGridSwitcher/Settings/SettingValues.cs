@@ -95,16 +95,16 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
 	    public bool StickyWindowEnabled = true;
 
-        public bool ActivateWebBrowserOnSwitch = true;
+        public bool ActivateWebBrowserOnSwitch = false;
 
         public List<BrowserInfo> BrowserInfoList = new List<BrowserInfo>();
 
-        public int MoveOnNewWindowDetectTimeoutMs = 3000;
+        public int MoveOnNewWindowDetectTimeoutMs = 5000;
 
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
 
-        public int SettingsVersion = 3;
+        public int SettingsVersion = 4;
 
         private static string SettingsFileName { 
             get {
@@ -213,6 +213,15 @@ namespace VirtualDesktopGridSwitcher.Settings {
                     ArrowKeysEnabled = false;
                 }
                 SettingsVersion = 3;
+                save = true;
+            }
+
+            if (SettingsVersion == 3) {
+                if (MoveOnNewWindowDetectTimeoutMs == 3000) {
+                    MoveOnNewWindowDetectTimeoutMs = 5000;
+                }
+                ActivateWebBrowserOnSwitch = false;
+                SettingsVersion = 4;
                 save = true;
             }
 
