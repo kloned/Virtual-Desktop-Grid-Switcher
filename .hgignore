@@ -17,6 +17,7 @@ Thumbs.db
 *.assets.cache
 *.pubxml.user
 VirtualDesktop-master - */*
+Package
 syntax: regexp
 .vs
 packages
