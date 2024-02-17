@@ -123,7 +123,11 @@ partial class VirtualDesktop
 
     private static void InitializeCore()
     {
-        _provider.Initialize(_assembly ??= new ComInterfaceAssemblyBuilder(_configuration).GetAssembly());
+        try {
+            _provider.Initialize(_assembly ??= new ComInterfaceAssemblyBuilder(_configuration).GetAssembly());
+        } catch {
+            _provider.Initialize(_assembly = new ComInterfaceAssemblyBuilder(_configuration).CompileNewAssembly());
+        }
 
         _notificationListener?.Dispose();
         _notificationListener = _provider.VirtualDesktopNotificationService.Register(new EventProxy());

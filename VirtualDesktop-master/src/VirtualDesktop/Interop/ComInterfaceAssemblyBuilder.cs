@@ -41,6 +41,9 @@ internal class ComInterfaceAssemblyBuilder
     public ComInterfaceAssembly GetAssembly()
         => _assembly ??= new ComInterfaceAssembly(this.LoadExistingAssembly() ?? this.CreateAssembly());
 
+    public ComInterfaceAssembly CompileNewAssembly()
+        => _assembly = new ComInterfaceAssembly(this.CreateAssembly());
+
     private Assembly? LoadExistingAssembly()
     {
         if (this._configuration.CompiledAssemblySaveDirectory.Exists)
@@ -57,7 +60,7 @@ internal class ComInterfaceAssemblyBuilder
                         {
                             Debug.WriteLine($"Assembly found: {file.FullName}");
 #if !DEBUG
-                            return Assembly.LoadFile(file.FullName);
+                            return LoadViaShadowCopy(file.FullName);
 #else
                             Debug.WriteLine($"Debug force assembly creation");
 #endif
@@ -177,7 +180,7 @@ internal class ComInterfaceAssemblyBuilder
 
                 var path = Path.Combine(dir.FullName, name);
                 var result = compilation.Emit(path);
-                if (result.Success) return AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
+                if (result.Success) return Assembly.LoadFile(path);
 
                 File.Delete(path);
                 errorMessage = string.Join(Environment.NewLine, result.Diagnostics.Select(x => $"  {x.GetMessage()}"));
@@ -201,5 +204,13 @@ internal class ComInterfaceAssemblyBuilder
         {
             GC.Collect();
         }
+    }
+
+    private Assembly LoadViaShadowCopy(string filePath)
+    {
+        var newFilePath = filePath.Replace(".generated.dll", ".shadowcopy.dll");
+
+        File.Copy(filePath, newFilePath, true);
+        return Assembly.LoadFile(newFilePath);
     }
 }
