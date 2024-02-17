@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Windows.Forms;
 
+using WindowsDesktop.Utils;
+
 namespace VirtualDesktopGridSwitcher.AboutBox
 {
 	partial class AboutBox : Form
@@ -15,7 +17,7 @@ namespace VirtualDesktopGridSwitcher.AboutBox
 			this.labelCopyright.Text = AssemblyCopyright;
 			this.textBoxDescription.Text = AssemblyDescription;
 			this.labelOSVersion.Text = 
-				"OS: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription + " / " + Environment.OSVersion.Version.ToString();
+				"OS Build: " + OS.Build.ToString();
 		}
 
 		#region Assembly Attribute Accessors

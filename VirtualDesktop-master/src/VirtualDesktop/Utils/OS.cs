@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsDesktop.Utils
 {
-    internal class OS
+    public class OS
     {
         /// <summary>
         /// Return the OS Build number such as: 22621.2215
