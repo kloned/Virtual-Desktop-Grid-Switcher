@@ -17,19 +17,19 @@ namespace WindowsDesktop.Interop.Build22631
 
         void VirtualDesktopDestroyed(IVirtualDesktop pDesktopDestroyed, IVirtualDesktop pDesktopFallback);
 
-        void VirtualDesktopMoved(IVirtualDesktop pDesktop, int nIndexFrom, int nIndexTo);
+        //void VirtualDesktopMoved(IVirtualDesktop pDesktop, int nIndexFrom, int nIndexTo);
 
-        void VirtualDesktopRenamed(IVirtualDesktop pDesktop, HString chName);
+        //void VirtualDesktopRenamed(IVirtualDesktop pDesktop, HString chName);
 
         void ViewVirtualDesktopChanged(IApplicationView pView);
 
         void CurrentVirtualDesktopChanged(IVirtualDesktop pDesktopOld, IVirtualDesktop pDesktopNew);
 
-        void VirtualDesktopWallpaperChanged(IVirtualDesktop pDesktop, HString chPath);
+        //void VirtualDesktopWallpaperChanged(IVirtualDesktop pDesktop, HString chPath);
 
-        void VirtualDesktopSwitched(IVirtualDesktop pDesktop);
+        //void VirtualDesktopSwitched(IVirtualDesktop pDesktop);
 
-        void RemoteVirtualDesktopConnected(IVirtualDesktop pDesktop);
+        //void RemoteVirtualDesktopConnected(IVirtualDesktop pDesktop);
     }
 
     internal class VirtualDesktopNotification : VirtualDesktopNotificationService.EventListenerBase, IVirtualDesktopNotification
@@ -54,15 +54,15 @@ namespace WindowsDesktop.Interop.Build22631
             this.DestroyedCore(pDesktopDestroyed, pDesktopFallback);
         }
 
-        public void VirtualDesktopMoved(IVirtualDesktop pDesktop, int nIndexFrom, int nIndexTo)
-        {
-            this.MovedCore(pDesktop, nIndexFrom, nIndexTo);
-        }
+        //public void VirtualDesktopMoved(IVirtualDesktop pDesktop, int nIndexFrom, int nIndexTo)
+        //{
+        //    this.MovedCore(pDesktop, nIndexFrom, nIndexTo);
+        //}
 
-        public void VirtualDesktopRenamed(IVirtualDesktop pDesktop, HString chName)
-        {
-            this.RenamedCore(pDesktop, chName);
-        }
+        //public void VirtualDesktopRenamed(IVirtualDesktop pDesktop, HString chName)
+        //{
+        //    this.RenamedCore(pDesktop, chName);
+        //}
 
         public void ViewVirtualDesktopChanged(IApplicationView pView)
         {
@@ -74,20 +74,20 @@ namespace WindowsDesktop.Interop.Build22631
             this.CurrentChangedCore(pDesktopOld, pDesktopNew);
         }
 
-        public void VirtualDesktopWallpaperChanged(IVirtualDesktop pDesktop, HString chPath)
-        {
-            this.WallpaperChangedCore(pDesktop, chPath);
-        }
+        //public void VirtualDesktopWallpaperChanged(IVirtualDesktop pDesktop, HString chPath)
+        //{
+        //    this.WallpaperChangedCore(pDesktop, chPath);
+        //}
 
-        public void VirtualDesktopSwitched(IVirtualDesktop pDesktop)
-        {
-            this.SwitchedCore(pDesktop);
-        }
+        //public void VirtualDesktopSwitched(IVirtualDesktop pDesktop)
+        //{
+        //    this.SwitchedCore(pDesktop);
+        //}
 
-        public void RemoteVirtualDesktopConnected(IVirtualDesktop pDesktop)
-        {
-            this.RemoteConnectedCore(pDesktop);
-        }
+        //public void RemoteVirtualDesktopConnected(IVirtualDesktop pDesktop)
+        //{
+        //    this.RemoteConnectedCore(pDesktop);
+        //}
 
     }
 }
