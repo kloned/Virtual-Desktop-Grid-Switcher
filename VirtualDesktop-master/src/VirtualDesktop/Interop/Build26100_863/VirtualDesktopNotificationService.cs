@@ -9,6 +9,9 @@ namespace WindowsDesktop.Interop.Build26100;
 
 public class VirtualDesktopNotificationService : ComWrapperBase<IVirtualDesktopNotificationService>, IVirtualDesktopNotificationService
 {
+    private const System.Reflection.BindingFlags BaseTypeMemberAttrs = 
+        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.DeclaredOnly;
+
     private readonly ComWrapperFactory _factory;
 
     internal VirtualDesktopNotificationService(ComInterfaceAssembly assembly, ComWrapperFactory factory)
@@ -20,8 +23,23 @@ public class VirtualDesktopNotificationService : ComWrapperBase<IVirtualDesktopN
     public IDisposable Register(IVirtualDesktopNotification notification)
     {
         var type = this.ComInterfaceAssembly.GetType("VirtualDesktopNotification");
-        var listener = Activator.CreateInstance(type) as EventListenerBase
-            ?? throw new Exception($"{nameof(EventListenerBase)} inheritance type is not found in the COM interface assembly.");
+        if (type == null)
+            throw new Exception($"VirtualDesktopNotification type not found in the COM interface assembly. Has types {
+                string.Join(
+                    Environment.NewLine, 
+                    (this.ComInterfaceAssembly.GetType().GetField("_knownTypes", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                        .GetValue(this.ComInterfaceAssembly)
+                        as Dictionary<string, Type>)
+                        .Values.Select(t => t.FullName))}");
+
+        var listener = Activator.CreateInstance(type) as EventListenerBase;
+        if (listener == null) {
+            throw new Exception($"{nameof(EventListenerBase)} inheritance type is not found in the COM interface assembly. Base Type is {type.BaseType.FullName} and has members {
+                string.Join(
+                    Environment.NewLine, 
+                    type.BaseType.GetMembers(BaseTypeMemberAttrs)
+                    .Select(m => m.ToString()))}");
+        }
 
         listener.Notification = notification;
         listener.Factory = this._factory;
