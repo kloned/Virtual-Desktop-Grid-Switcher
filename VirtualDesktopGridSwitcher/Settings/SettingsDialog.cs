@@ -63,6 +63,10 @@ namespace VirtualDesktopGridSwitcher.Settings {
             textBoxRows.Text = settings.Rows.ToString();
             textBoxColumns.Text = settings.Columns.ToString();
 
+            Interval.Text = settings.IntervalMs.ToString();
+
+            checkBoxTimer.Checked = settings.TimerEnabled;
+
             checkBoxWrapAround.Checked = settings.WrapAround;
 
             checkBoxCtrlModifierSwitchDir.Checked = settings.SwitchDirModifiers.Ctrl;
@@ -122,6 +126,9 @@ namespace VirtualDesktopGridSwitcher.Settings {
             try {
                 var rows = int.Parse(textBoxRows.Text);
                 var cols = int.Parse(textBoxColumns.Text);
+
+                settings.TimerEnabled = checkBoxTimer.Checked;
+                settings.IntervalMs = int.Parse(Interval.Text);
 
                 if (rows * cols > 20) {
                     var result =

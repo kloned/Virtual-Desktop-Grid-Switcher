@@ -111,15 +111,18 @@ namespace VirtualDesktopGridSwitcher {
                 lastActiveBrowserWindows = new IntPtr[desktops.Length];
 
                 //VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-               
-                virtualDesktopTimer = new VirtualDesktopTimer(
-                    callbackMutex,
-                    desktopIdLookup,
-                    () => Current,
-                    VirtualDesktop_CurrentChanged,
-                    intervalMs: 1000  // Optional: specify custom interval
-                );
-                virtualDesktopTimer.Start();
+
+                if (settings.TimerEnabled)
+                {
+                    virtualDesktopTimer = new VirtualDesktopTimer(
+                        callbackMutex,
+                        desktopIdLookup,
+                        () => Current,
+                        VirtualDesktop_CurrentChanged,
+                        intervalMs: settings.IntervalMs  // Optional: specify custom interval
+                    );
+                    virtualDesktopTimer.Start();
+                }
 
             } catch (Exception ex) {
                 MessageBox.Show(

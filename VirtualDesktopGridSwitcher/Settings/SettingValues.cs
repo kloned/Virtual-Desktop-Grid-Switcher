@@ -101,6 +101,9 @@ namespace VirtualDesktopGridSwitcher.Settings {
 
         public int MoveOnNewWindowDetectTimeoutMs = 5000;
 
+        public bool TimerEnabled = true;
+        public int IntervalMs = 500;
+
         [XmlArrayItem(ElementName = "ExeName")]
         public List<string> MoveOnNewWindowExeNames = new List<string>();
 
