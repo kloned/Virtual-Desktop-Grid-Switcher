@@ -36,6 +36,8 @@ namespace VirtualDesktopGridSwitcher {
 
         Mutex callbackMutex = new Mutex();
 
+        VirtualDesktopTimer virtualDesktopTimer;
+
         public VirtualDesktopGridManager(SysTrayProcess sysTrayProcess, SettingValues settings)
         {
             this.settings = settings;
@@ -109,7 +111,16 @@ namespace VirtualDesktopGridSwitcher {
                 lastActiveBrowserWindows = new IntPtr[desktops.Length];
 
                 //VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
-                StartWinFormsTimer();
+               
+                virtualDesktopTimer = new VirtualDesktopTimer(
+                    callbackMutex,
+                    desktopIdLookup,
+                    () => Current,
+                    VirtualDesktop_CurrentChanged,
+                    intervalMs: 1000  // Optional: specify custom interval
+                );
+                virtualDesktopTimer.Start();
+
             } catch (Exception ex) {
                 MessageBox.Show(
                     "There was an error initialising desktops." + Environment.NewLine +
@@ -135,7 +146,7 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void Stop() {
-            StopWinFormsTimer();
+            virtualDesktopTimer.Stop();
             settings.Apply -= Restart;
             UnregisterHotKeys();
             if (desktopIdLookup != null) {
