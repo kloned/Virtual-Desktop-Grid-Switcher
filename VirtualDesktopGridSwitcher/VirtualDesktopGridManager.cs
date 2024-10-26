@@ -54,6 +54,35 @@ namespace VirtualDesktopGridSwitcher {
             WinAPI.UnhookWinEvent(fgWindowHook);
         }
 
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
+        private void StartWinFormsTimer() {
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = 500;
+            timer.Tick += (sender, e) => {
+                lock (callbackMutex) {
+                    DoOnTimerTick(sender, e);
+                }
+            };
+            timer.Start();
+        }
+
+        private void DoOnTimerTick(object sender, EventArgs e) {
+            lock (callbackMutex) {
+                // check if virtual desktop has switched
+                if (VirtualDesktop.Current != VirtualDesktop.FromId(desktopIdLookup[Current])) {
+                    // call VirtualDesktop_CurrentChanged
+                    VirtualDesktop_CurrentChanged(null, 
+                        new VirtualDesktopChangedEventArgs(VirtualDesktop.FromId(desktopIdLookup[Current]), VirtualDesktop.Current));
+                }
+            }
+        }
+
+        private void StopWinFormsTimer() {
+            timer.Stop();
+            timer.Dispose();
+        }
+
         private bool Start() {
             try {
                 var curDesktops = VirtualDesktop.GetDesktops().ToList();
@@ -79,7 +108,8 @@ namespace VirtualDesktopGridSwitcher {
                 activeWindows = new IntPtr[desktops.Length];
                 lastActiveBrowserWindows = new IntPtr[desktops.Length];
 
-                VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+                //VirtualDesktop.CurrentChanged += VirtualDesktop_CurrentChanged;
+                StartWinFormsTimer();
             } catch (Exception ex) {
                 MessageBox.Show(
                     "There was an error initialising desktops." + Environment.NewLine +
@@ -105,6 +135,7 @@ namespace VirtualDesktopGridSwitcher {
         }
 
         private void Stop() {
+            StopWinFormsTimer();
             settings.Apply -= Restart;
             UnregisterHotKeys();
             if (desktopIdLookup != null) {
@@ -402,6 +433,13 @@ namespace VirtualDesktopGridSwitcher {
             private set {
                 if (desktopIdLookup != null) {
                     _current = value;
+                    VirtualDesktop virtualDesktopToSwitchTo = VirtualDesktop.FromId(desktopIdLookup[value]);
+                    if (virtualDesktopToSwitchTo != null) {
+                        virtualDesktopToSwitchTo.Switch();
+
+                        VirtualDesktop_CurrentChanged(null, new VirtualDesktopChangedEventArgs(null, virtualDesktopToSwitchTo));
+                    }
+
                     VirtualDesktop.FromId(desktopIdLookup[value]).Switch();
                 }
             }
