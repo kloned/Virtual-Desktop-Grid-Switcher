@@ -402,13 +402,7 @@ namespace VirtualDesktopGridSwitcher {
             private set {
                 if (desktopIdLookup != null) {
                     _current = value;
-                    VirtualDesktop virtualDesktopToSwitchTo = VirtualDesktop.FromId(desktopIdLookup[value]);
-                    if (virtualDesktopToSwitchTo != null) {
-                        virtualDesktopToSwitchTo.Switch();
-
-                        VirtualDesktop_CurrentChanged(null, new VirtualDesktopChangedEventArgs(null, virtualDesktopToSwitchTo));
-
-                    }
+                    VirtualDesktop.FromId(desktopIdLookup[value]).Switch();
                 }
             }
         }
