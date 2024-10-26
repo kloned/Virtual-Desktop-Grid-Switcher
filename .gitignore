@@ -22,3 +22,5 @@ Package
 syntax: regexp
 .vs*
 packages
+VirtualDesktopGridSwitcher/obj/*
+VirtualDesktop-master/.editorconfig
