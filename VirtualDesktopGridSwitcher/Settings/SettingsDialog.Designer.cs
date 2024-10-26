@@ -96,11 +96,11 @@
             checkBoxArrowKeys = new System.Windows.Forms.CheckBox();
             Interval = new System.Windows.Forms.TextBox();
             IntervalLabel = new System.Windows.Forms.Label();
+            checkBoxTimer = new System.Windows.Forms.CheckBox();
             groupBoxDesktops1to12 = new System.Windows.Forms.GroupBox();
             pictureBoxDonate = new System.Windows.Forms.PictureBox();
             groupBoxByDirection = new System.Windows.Forms.GroupBox();
             groupBoxByPosition = new System.Windows.Forms.GroupBox();
-            checkBoxTimer = new System.Windows.Forms.CheckBox();
             groupBoxDesktops1to12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxDonate).BeginInit();
             groupBoxByDirection.SuspendLayout();
@@ -243,7 +243,6 @@
             // 
             buttonApply.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             buttonApply.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            buttonApply.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             buttonApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             buttonApply.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             buttonApply.Location = new System.Drawing.Point(518, 614);
@@ -1019,6 +1018,21 @@
             IntervalLabel.Text = "Timer Pulling Interval, ms:";
             toolTipSettingsDialog.SetToolTip(IntervalLabel, "Key modifier combination to use with arrow keys to move a window to another desktop");
             // 
+            // checkBoxTimer
+            // 
+            checkBoxTimer.AutoSize = true;
+            checkBoxTimer.Checked = true;
+            checkBoxTimer.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBoxTimer.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            checkBoxTimer.Location = new System.Drawing.Point(12, 211);
+            checkBoxTimer.Margin = new System.Windows.Forms.Padding(1);
+            checkBoxTimer.Name = "checkBoxTimer";
+            checkBoxTimer.Size = new System.Drawing.Size(69, 20);
+            checkBoxTimer.TabIndex = 75;
+            checkBoxTimer.Text = "Enable";
+            toolTipSettingsDialog.SetToolTip(checkBoxTimer, "Enable / Disable All Move To Desktop Combinations");
+            checkBoxTimer.UseVisualStyleBackColor = true;
+            // 
             // groupBoxDesktops1to12
             // 
             groupBoxDesktops1to12.Controls.Add(comboBox12);
@@ -1113,21 +1127,6 @@
             groupBoxByPosition.TabIndex = 76;
             groupBoxByPosition.TabStop = false;
             groupBoxByPosition.Text = "By Position";
-            // 
-            // checkBoxTimer
-            // 
-            checkBoxTimer.AutoSize = true;
-            checkBoxTimer.Checked = true;
-            checkBoxTimer.CheckState = System.Windows.Forms.CheckState.Checked;
-            checkBoxTimer.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            checkBoxTimer.Location = new System.Drawing.Point(12, 211);
-            checkBoxTimer.Margin = new System.Windows.Forms.Padding(1);
-            checkBoxTimer.Name = "checkBoxTimer";
-            checkBoxTimer.Size = new System.Drawing.Size(69, 20);
-            checkBoxTimer.TabIndex = 75;
-            checkBoxTimer.Text = "Enable";
-            toolTipSettingsDialog.SetToolTip(checkBoxTimer, "Enable / Disable All Move To Desktop Combinations");
-            checkBoxTimer.UseVisualStyleBackColor = true;
             // 
             // SettingsDialog
             // 
