@@ -1004,7 +1004,7 @@
             Interval.Size = new System.Drawing.Size(72, 23);
             Interval.TabIndex = 73;
             Interval.Text = "500";
-            toolTipSettingsDialog.SetToolTip(Interval, "Number of columns in desktop grid");
+            toolTipSettingsDialog.SetToolTip(Interval, "Time interval between pollings");
             // 
             // IntervalLabel
             // 
@@ -1015,8 +1015,8 @@
             IntervalLabel.Name = "IntervalLabel";
             IntervalLabel.Size = new System.Drawing.Size(179, 16);
             IntervalLabel.TabIndex = 74;
-            IntervalLabel.Text = "Timer Pulling Interval, ms:";
-            toolTipSettingsDialog.SetToolTip(IntervalLabel, "Key modifier combination to use with arrow keys to move a window to another desktop");
+            IntervalLabel.Text = "Timer Polling Interval, ms:";
+            toolTipSettingsDialog.SetToolTip(IntervalLabel, "Time interval between pollings");
             // 
             // checkBoxTimer
             // 
@@ -1030,7 +1030,7 @@
             checkBoxTimer.Size = new System.Drawing.Size(69, 20);
             checkBoxTimer.TabIndex = 75;
             checkBoxTimer.Text = "Enable";
-            toolTipSettingsDialog.SetToolTip(checkBoxTimer, "Enable / Disable All Move To Desktop Combinations");
+            toolTipSettingsDialog.SetToolTip(checkBoxTimer, "Enable / Disable Timer Pulling");
             checkBoxTimer.UseVisualStyleBackColor = true;
             // 
             // groupBoxDesktops1to12
