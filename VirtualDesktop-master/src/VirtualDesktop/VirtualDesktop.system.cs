@@ -136,7 +136,7 @@ partial class VirtualDesktop
         }
 
         _notificationListener?.Dispose();
-        _notificationListener = _provider.VirtualDesktopNotificationService.Register(new EventProxy());
+        // _notificationListener = _provider.VirtualDesktopNotificationService.Register(new EventProxy());
     }
 
     private static T? SafeInvoke<T>(Func<T> action, params HResult[] hResult)
